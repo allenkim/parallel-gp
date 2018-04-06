@@ -30,7 +30,7 @@ class ParseGraph{
 		vector<vector<Node> > graph;
 		int num_rows;
 
-		void initialize_graph(int size);
+		void generate_graph(int size);
 		float fitness();
 		Terminal eval();
 };

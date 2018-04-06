@@ -33,12 +33,13 @@ Terminal Node::microeval(){
 	return Terminal::FALSE;
 }
 
-void ParseGraph::initialize_graph(int size){
+void ParseGraph::generate_graph(int size){
 	graph = vector<vector<Node>>(size,vector<Node>(size)); //allocate memory for the graph (has size * size Node objects)
 
 	//setup the first node
 	NonTerminal node_type = static_cast<NonTerminal>(rand() % num_nonterminal_types);
 	int num_args = num_arguments(node_type);
+	(void)num_args;
 	/*
 	for (int i = 0; i < size; i++){ //generate children
 		if (graph[1][i].active == NULL){

@@ -1,6 +1,7 @@
 #include <vector>
 #include <random>
 #include <cstdlib>
+#include <string>
 #include "parse_graph.h"
 
 /*This class represents the node objects, which will be used to populate the parse graph. A node will either be active or inactive, and can be
@@ -12,11 +13,17 @@ Node::Node(){
 
 }
 
-Node::Node(bool active, bool terminal, vector<Node*> children): active(active), terminal(terminal),children(children) {
-	if (this->terminal)
-		node_type = rand() % (num_terminal_types);
-	else
-		node_type = rand() % (num_nonterminal_types);
+Node::Node(bool active, bool terminal): active(active), terminal(terminal) {
+	if (this->terminal){
+		node_type = rand() % num_terminal_types;
+	}else {
+		node_type = rand() % num_nonterminal_types;
+		int num_children = int num_arguments(static_cast<NonTerminal> node_type);
+		children = std::vector<int>(num_children);
+		for (int i = 0; i < num_children; i++){
+			children[i]= rand() % size;
+		}
+	}
 }
 
 Node::Node(const Node& node){
@@ -28,23 +35,35 @@ Node::~Node(){
 		delete child;
 }
 
+std::string Node::toString(){
+	if ()
+	return ("Node: " + (this->active ?"ACTIVE":"INACTIVE") + (this->terminal ? "TERMINAL":"NONTERMINAL" ) + "VALUE: " + type_to_string(this->terminal,this->node_type) + );
+}
+
 Terminal Node::microeval(){
 	// Need to call global microeval with appropriate id
 	return Terminal::FALSE;
 }
 
-void ParseGraph::initialize_graph(int size){
-	graph = vector<vector<Node>>(size,vector<Node>(size)); //allocate memory for the graph (has size * size Node objects)
-
+void ParseGraph::generate_graph(int size){
+	graph = std::vector<std::vector<Node>>(size,std::vector<Node>(size)); //allocate memory for the graph (has size * size Node objects)
+	output = Node(true, false);
 	//setup the first node
-	NonTerminal node_type = static_cast<NonTerminal>(rand() % num_nonterminal_types);
-	int num_args = num_arguments(node_type);
-	/*
-	for (int i = 0; i < size; i++){ //generate children
-		if (graph[1][i].active == NULL){
-
+	for (int i = 0; i < size-1; i++){ //generate children
+		for (int j = 0; j < size; j++){
+			if (rand() % 2){
+				graph[i][j] = Node(false, true);
+			}else{
+				graph[i][j] = Node(false, false);
+			}
 		}
 	}
-	graph[0][0] = Node(true,false,rand()%(xor::));*/
+	for (int i = 0; i < size; i++){
+		graph[size-1][i] = Node(false,true);
+	}
 }
 
+void ParseGraph::print_parse_graph(){
+	cout << output
+
+}

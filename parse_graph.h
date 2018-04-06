@@ -1,3 +1,8 @@
+#include <vector>
+#include "xor.h"
+
+using std::vector;
+
 class Node{
 	public:
 		Node();
@@ -16,22 +21,9 @@ class ParseGraph{
 		ParseGraph();
 		~ParseGraph();
 
+		vector<vector<Node*> > grid;	
 		void init_random();
 		float fitness();
 		Terminal eval();
-};
-
-class GP{
-	public:
-		GP();
-		~GP();
-
-		vector<ParseGraph*> population;
-		int gen_num;
-
-		void next_gen();
-		vector<ParseGraph*> selection(vector<ParseGraph*> pop, int num_survivors);
-		ParseGraph* crossover(ParseGraph* p1, ParseGraph* p2);
-		void mutation(ParseGraph* g);
 };
 

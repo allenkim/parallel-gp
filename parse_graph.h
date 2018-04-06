@@ -8,7 +8,7 @@ using std::vector;
 class Node{
 	public:
 		Node();
-		Node(bool active, bool terminal, vector<Node*> children);
+		Node(bool active, bool terminal, vector<int> children);
 		Node(const Node&);
 		~Node();
 
@@ -16,19 +16,20 @@ class Node{
 		bool terminal;
 		//value for terminal or nonterminal depending
 		int node_type; 
-		vector<Node*> children;
+		vector<int> children;
 
 		Terminal microeval();
 };
 
 class ParseGraph{
 	public:
-		ParseGraph() : num_rows(0) {};
+		ParseGraph() : size(0) {};
 		ParseGraph(const ParseGraph&);
 		~ParseGraph();
 
+		Node output;
 		vector<vector<Node> > graph;
-		int num_rows;
+		int size;
 
 		void generate_graph(int size);
 		float fitness();

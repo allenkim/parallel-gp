@@ -21,7 +21,7 @@ class GP{
 
 		void initialize_pop(int grid_size);
 		ParseGraph* selection();
-		void crossover(ParseGraph* p1, ParseGraph* p2);
+		void crossover(ParseGraph* g1, ParseGraph* g2);
 		void mutation(ParseGraph* g);
 		void next_gen();
 	private:

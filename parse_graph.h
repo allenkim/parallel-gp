@@ -13,7 +13,7 @@ class Node{
 		bool active;
 		bool terminal;
 		//value for terminal or nonterminal depending
-		int node_type; 
+		int node_type;
 		vector<Node*> children;
 
 		Terminal microeval();
@@ -24,12 +24,11 @@ class ParseGraph{
 		ParseGraph() : num_rows(0) {};
 		ParseGraph(const ParseGraph&);
 		~ParseGraph();
-
+		Node output;
 		vector<vector<Node> > graph;
 		int num_rows;
 
-		void initialize_graph(int size);
+		void generate_graph(int size);
 		float fitness();
 		Terminal eval();
 };
-

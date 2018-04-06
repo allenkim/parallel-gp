@@ -1,4 +1,7 @@
+#include <vector>
 #include "xor.h"
+
+using std::vector;
 
 class Node{
 	public:
@@ -18,6 +21,7 @@ class ParseGraph{
 		ParseGraph();
 		~ParseGraph();
 
+		vector<vector<Node*> > grid;	
 		void init_random();
 		float fitness();
 		Terminal eval();

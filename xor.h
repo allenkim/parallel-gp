@@ -1,3 +1,5 @@
+#ifndef __XOR_H__
+#define __XOR_H__
 enum Terminal{
 	FALSE,
 	TRUE
@@ -20,3 +22,6 @@ string type_to_string(bool terminal, int id);
 Terminal microeval(NonTerminal id);
 float fitness();
 Terminal eval();
+
+#endif
+

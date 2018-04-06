@@ -1,3 +1,5 @@
+#ifndef __GP_H__
+#define __GP_H__
 #include <vector>
 #include "parse_graph.h"
 
@@ -16,4 +18,6 @@ class GP{
 		ParseGraph* crossover(ParseGraph* p1, ParseGraph* p2);
 		void mutation(ParseGraph* g);
 };
+
+#endif
 

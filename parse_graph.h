@@ -1,3 +1,5 @@
+#ifndef __PARSE_GRAPH_H__
+#define __PARSE_GRAPH_H__
 #include <vector>
 #include "xor.h"
 
@@ -32,3 +34,9 @@ class ParseGraph{
 		float fitness();
 		Terminal eval();
 };
+<<<<<<< HEAD
+=======
+
+#endif
+
+>>>>>>> 46fa42dba4cbc1c7ffb60713b11ce87d0701bc02

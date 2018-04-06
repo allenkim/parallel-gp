@@ -13,12 +13,12 @@ Node::Node(){
 
 }
 
-Node::Node(bool active, bool terminal): active(active), terminal(terminal) {
+Node::Node(bool active, bool terminal, int size): active(active), terminal(terminal) {
 	if (this->terminal){
 		node_type = rand() % num_terminal_types;
 	}else {
 		node_type = rand() % num_nonterminal_types;
-		int num_children = int num_arguments(static_cast<NonTerminal> node_type);
+		int num_children = num_arguments(static_cast<NonTerminal>(node_type));
 		children = std::vector<int>(num_children);
 		for (int i = 0; i < num_children; i++){
 			children[i]= rand() % size;
@@ -36,8 +36,13 @@ Node::~Node(){
 }
 
 std::string Node::toString(){
-	if ()
-	return ("Node: " + (this->active ?"ACTIVE":"INACTIVE") + (this->terminal ? "TERMINAL":"NONTERMINAL" ) + "VALUE: " + type_to_string(this->terminal,this->node_type) + );
+	string children_to_string = "";
+	if (!this->terminal){
+		for (int i = 0; i < children.size(); i++){
+			children_to_string += (this->children[i] + " ");
+		}
+	}
+	return ("Node: " + (this->active ?"ACTIVE":"INACTIVE") + (this->terminal ? "TERMINAL":"NONTERMINAL" ) + "VALUE: " + type_to_string(this->terminal,this->node_type) + children_to_string);
 }
 
 Terminal Node::microeval(){
@@ -61,9 +66,29 @@ void ParseGraph::generate_graph(int size){
 	for (int i = 0; i < size; i++){
 		graph[size-1][i] = Node(false,true);
 	}
+	//mark the active nodes
+	for (int i = 0; i < output.children.size(); i++){
+		graph[0][output.children[i]].active = true;
+	}
+	for (int i = 0; i < size; i++){
+		for (int j = 0; j < size; j++){
+			if (graph[i][j].active){
+				if (!graph[i][j].terminal){
+					for (int k = 0; k < graph[i][j].children.size(); k++ ){
+						graph[i+1][graph[i][j].children[k]].active = true;
+					}
+				}
+			}
+		}
+	}
 }
 
 void ParseGraph::print_parse_graph(){
-	cout << output
-
+	cout << output.toString() << endl;
+	for (int i = 0; i < size; i++){
+		for (int j = 0; j < size; j++){
+			std::cout << graph[i][j].toString() << "\t";
+		}
+		std::cout << std::endl;
+	}
 }

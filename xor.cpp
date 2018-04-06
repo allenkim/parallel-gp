@@ -7,9 +7,6 @@ int num_arguments(NonTerminal non_terminal_type){
 	return 1;
 }
 
-
-
-
 Terminal microeval(NonTerminal id){
 	return Terminal::FALSE;
 }

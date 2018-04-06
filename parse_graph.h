@@ -2,13 +2,14 @@
 #define __PARSE_GRAPH_H__
 #include <vector>
 #include "xor.h"
+#include <string>
 
 using std::vector;
 
 class Node{
 	public:
 		Node();
-		Node(bool active, bool terminal, vector<Node*> children);
+		Node(bool active, bool terminal);
 		Node(const Node&);
 		~Node();
 
@@ -16,7 +17,7 @@ class Node{
 		bool terminal;
 		//value for terminal or nonterminal depending
 		int node_type;
-		vector<Node*> children;
+		vector<int> children;
 
 		Terminal microeval();
 };

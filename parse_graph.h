@@ -34,9 +34,5 @@ class ParseGraph{
 		float fitness();
 		Terminal eval();
 };
-<<<<<<< HEAD
-=======
 
 #endif
-
->>>>>>> 46fa42dba4cbc1c7ffb60713b11ce87d0701bc02

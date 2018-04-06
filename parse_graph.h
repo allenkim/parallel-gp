@@ -9,10 +9,10 @@ using std::vector;
 class Node{
 	public:
 		Node();
-		Node(bool active, bool terminal);
+		Node(bool active, bool terminal, int size);
 		Node(const Node&);
 		~Node();
-
+		std::string toString();
 		bool active;
 		bool terminal;
 		//value for terminal or nonterminal depending
@@ -24,12 +24,13 @@ class Node{
 
 class ParseGraph{
 	public:
-		ParseGraph() : num_rows(0) {};
+		ParseGraph() : size(0) {};
 		ParseGraph(const ParseGraph&);
 		~ParseGraph();
+		void print_parse_graph();
 		Node output;
 		vector<vector<Node> > graph;
-		int num_rows;
+		int size;
 
 		void generate_graph(int size);
 		float fitness();

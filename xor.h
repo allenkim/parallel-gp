@@ -1,5 +1,6 @@
 #ifndef __XOR_H__
 #define __XOR_H__
+#include <string>
 
 enum Terminal{
 	FALSE,

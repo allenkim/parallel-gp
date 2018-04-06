@@ -1,4 +1,6 @@
 #include "xor.h"
+#include <string>
+#include <iostream>
 
 int num_arguments(NonTerminal non_terminal_type){
 	if (non_terminal_type != NonTerminal::NOT){
@@ -11,7 +13,7 @@ Terminal microeval(NonTerminal id){
 	return Terminal::FALSE;
 }
 
-string type_to_string(bool terminal, int id){
+std::string type_to_string(bool terminal, int id){
 	if (terminal){
 		switch (id) {
 			case 0:
@@ -20,7 +22,7 @@ string type_to_string(bool terminal, int id){
 				return "TRUE";
 			default:
 					std::cout << "ERROR in function type_to_string. Invalid ID." << std::endl;
-					exit();
+					exit(1);
 		}
 	}else{
 		switch (id) {
@@ -38,7 +40,7 @@ string type_to_string(bool terminal, int id){
 				return "I";
 			default:
 				std::cout << "ERROR in function type_to_string. Invalid ID." << std::endl;
-				exit();
+				exit(1);
 		}
 	}
 }

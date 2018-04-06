@@ -2,6 +2,7 @@
 #include <random>
 #include <cstdlib>
 #include <string>
+#include <iostream>
 #include "parse_graph.h"
 
 /*This class represents the node objects, which will be used to populate the parse graph. A node will either be active or inactive, and can be
@@ -30,19 +31,16 @@ Node::Node(const Node& node){
 
 }
 
-Node::~Node(){
-	for (Node* child : children)
-		delete child;
-}
+Node::~Node(){}
 
 std::string Node::toString(){
-	string children_to_string = "";
+	std::string children_to_string = "";
 	if (!this->terminal){
-		for (int i = 0; i < children.size(); i++){
-			children_to_string += (this->children[i] + " ");
+		for (unsigned int i = 0; i < this->children.size(); i++){
+			children_to_string += (std::string(" ") + std::to_string(this->children[i]));
 		}
 	}
-	return ("Node: " + (this->active ?"ACTIVE":"INACTIVE") + (this->terminal ? "TERMINAL":"NONTERMINAL" ) + "VALUE: " + type_to_string(this->terminal,this->node_type) + children_to_string);
+	return (std::string("Node: ") + (this->active ?"ACTIVE  ":"INACTIVE") + (this->terminal ? " TERMINAL   ":" NONTERMINAL" ) + " VALUE: " + type_to_string(this->terminal,this->node_type) + "\tCHILDREN: " + children_to_string);
 }
 
 Terminal Node::microeval(){
@@ -50,31 +48,36 @@ Terminal Node::microeval(){
 	return Terminal::FALSE;
 }
 
+ParseGraph::ParseGraph(const ParseGraph&){};
+
+ParseGraph::~ParseGraph(){};
+
 void ParseGraph::generate_graph(int size){
+	this->size = size;
 	graph = std::vector<std::vector<Node>>(size,std::vector<Node>(size)); //allocate memory for the graph (has size * size Node objects)
-	output = Node(true, false);
+	output = Node(true, false, size);
 	//setup the first node
 	for (int i = 0; i < size-1; i++){ //generate children
 		for (int j = 0; j < size; j++){
 			if (rand() % 2){
-				graph[i][j] = Node(false, true);
+				graph[i][j] = Node(false, true, size);
 			}else{
-				graph[i][j] = Node(false, false);
+				graph[i][j] = Node(false, false, size);
 			}
 		}
 	}
 	for (int i = 0; i < size; i++){
-		graph[size-1][i] = Node(false,true);
+		graph[size-1][i] = Node(false,true, size);
 	}
 	//mark the active nodes
-	for (int i = 0; i < output.children.size(); i++){
+	for (unsigned int i = 0; i < output.children.size(); i++){
 		graph[0][output.children[i]].active = true;
 	}
 	for (int i = 0; i < size; i++){
 		for (int j = 0; j < size; j++){
 			if (graph[i][j].active){
 				if (!graph[i][j].terminal){
-					for (int k = 0; k < graph[i][j].children.size(); k++ ){
+					for (unsigned int k = 0; k < graph[i][j].children.size(); k++ ){
 						graph[i+1][graph[i][j].children[k]].active = true;
 					}
 				}
@@ -84,7 +87,7 @@ void ParseGraph::generate_graph(int size){
 }
 
 void ParseGraph::print_parse_graph(){
-	cout << output.toString() << endl;
+	std::cout << output.toString() << std::endl;
 	for (int i = 0; i < size; i++){
 		for (int j = 0; j < size; j++){
 			std::cout << graph[i][j].toString() << "\t";

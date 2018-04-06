@@ -40,7 +40,7 @@ std::string Node::toString(){
 			children_to_string += (std::string(" ") + std::to_string(this->children[i]));
 		}
 	}
-	return (std::string("Node: ") + (this->active ?"ACTIVE  ":"INACTIVE") + (this->terminal ? " TERMINAL   ":" NONTERMINAL" ) + " VALUE: " + type_to_string(this->terminal,this->node_type) + "\tCHILDREN: " + children_to_string);
+	return (std::string("Node: ") + (this->active ?"ON ":"OFF") + (this->terminal ? " T ":" NT" ) + " VALUE: " + type_to_string(this->terminal,this->node_type) + "\tCHILDREN: " + children_to_string);
 }
 
 Terminal Node::microeval(){

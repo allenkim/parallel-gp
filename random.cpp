@@ -1,9 +1,12 @@
+#include <cstdlib>
+#include <ctime>
 #include "random.h"
 
 void init_rand_state(int num_threads){
+	srand(time(NULL));
 	state = new int[num_threads*4];
 	for (int i = 0; i < num_threads*4; i++){
-		state[i] = i * 5039 + 479001599 % 39916801;
+		state[i] = i * 5039 + 479001597 + rand() % 39916801;
 	}
 }
 

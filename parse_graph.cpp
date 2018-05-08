@@ -1,8 +1,8 @@
 #include <vector>
-#include <random>
 #include <cstdlib>
 #include <string>
 #include <iostream>
+#include "random.h"
 #include "parse_graph.h"
 
 /*This class represents the node objects, which will be used to populate the parse graph. A node will either be active or inactive, and can be
@@ -16,13 +16,13 @@ Node::Node(){
 
 Node::Node(bool active, bool terminal, int size): active(active), terminal(terminal) {
 	if (this->terminal){
-		node_type = rand() % num_terminal_types;
+		node_type = rand(0) % num_terminal_types;
 	}else {
-		node_type = rand() % num_nonterminal_types;
+		node_type = rand(0) % num_nonterminal_types;
 		int num_children = num_arguments(static_cast<NonTerminal>(node_type));
 		children = std::vector<int>(num_children);
 		for (int i = 0; i < num_children; i++){
-			children[i]= rand() % size;
+			children[i]= rand(0) % size;
 		}
 	}
 }
@@ -59,7 +59,7 @@ void ParseGraph::generate_graph(int size){
 	//setup the first node
 	for (int i = 0; i < size-1; i++){ //generate children
 		for (int j = 0; j < size; j++){
-			if (rand() % 2){
+			if (rand(0) % 2){
 				graph[i][j] = Node(false, true, size);
 			}else{
 				graph[i][j] = Node(false, false, size);

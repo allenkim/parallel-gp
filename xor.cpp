@@ -15,9 +15,9 @@ std::string type_to_string(bool terminal, int id){
 	if (terminal){
 		switch (id) {
 			case 0:
-				return "X1";
+				return "X1   ";
 			case 1:
-				return "X2";
+				return "X2   ";
 			default:
 					std::cout << "ERROR in function type_to_string. Invalid ID." << std::endl;
 					exit(1);

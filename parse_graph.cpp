@@ -34,7 +34,7 @@ std::string Node::toString(){
 			children_to_string += (std::string(" ") + std::to_string(this->children[i]));
 		}
 	}
-	return (std::string("Node: ") + (this->active ?"ON ":"OFF") + (this->terminal ? " T ":" NT" ) + " VALUE: " + type_to_string(this->terminal,this->node_type) + " CHILDREN: " + children_to_string);
+	return (std::string("Node:") + (this->active ?"ON ":"OFF") + (this->terminal ? " T ":" NT" ) + " VALUE: " + type_to_string(this->terminal,this->node_type) + "CHILDREN: " + children_to_string);
 }
 
 ParseGraph::ParseGraph(const ParseGraph&){};

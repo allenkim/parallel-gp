@@ -8,7 +8,6 @@ using std::vector;
 class GP{
 	public:
 		GP(int pop_size, int max_gen_num) : pop_size(pop_size), max_gen_num(max_gen_num) {}
-		~GP();
 
 		vector<ParseGraph*> population;
 		int pop_size;

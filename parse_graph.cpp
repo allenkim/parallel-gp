@@ -27,12 +27,6 @@ Node::Node(bool active, bool terminal, int size): active(active), terminal(termi
 	}
 }
 
-Node::Node(const Node& node){
-
-}
-
-Node::~Node(){}
-
 std::string Node::toString(){
 	std::string children_to_string = "";
 	if (!this->terminal){

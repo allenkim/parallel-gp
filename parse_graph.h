@@ -10,8 +10,6 @@ class Node{
 	public:
 		Node();
 		Node(bool active, bool terminal, int size);
-		Node(const Node&);
-		~Node();
 		std::string toString();
 		bool active;
 		bool terminal;

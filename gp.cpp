@@ -1,8 +1,7 @@
-#include <random>
-#include <utility>
+#include <iostream>
+#include <cstdio>
 #include "gp.h"
-
-typedef std::pair<int,int> ii;
+#include "random.h"
 
 void GP::initialize_pop(int grid_size){
 	for (int i = 0; i < this->pop_size; i++){
@@ -14,14 +13,33 @@ void GP::initialize_pop(int grid_size){
 
 /* g1 is the dad and g2 is mom
  * dad dies and mom becomes child
+ * also g1 and g2 should have same sizes...
  */
 void GP::crossover(ParseGraph* g1, ParseGraph* g2){
-	ii crosspoint1;
+	int cp1x = -1, cp1y = -1, cp2x = -1, cp2y = -1;
+	int sample_count = 1;
 	for (int i = 0; i < g1->size; i++){
 		for (int j = 0; j < g1->size; j++){
 			if (g1->graph[i][j].active){
-				crosspoint1 = std::make_pair(i,j);
+				if (rand(0) % sample_count == sample_count - 1){
+					cp1x = i;
+					cp1y = j;
+				}
 			}
+			if (g2->graph[i][j].active){
+				if (rand(0) % sample_count == sample_count - 1){
+					cp2x = i;
+					cp2y = j;
+				}
+			}
+		}
+	}
+	if (cp1x == -1 || cp2x == -1)
+		return;
+	g2->graph[cp2x][cp2y] = g1->graph[cp1x][cp1y];
+	for (int i = cp2x+1; i < g2->size; i++){
+		for (int j = 0; j < g2->size; j++){
+			g2->graph[i][j] = g1->graph[i][j];
 		}
 	}
 }

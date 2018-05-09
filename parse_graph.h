@@ -16,8 +16,6 @@ class Node{
 		//value for terminal or nonterminal depending
 		int node_type;
 		vector<int> children;
-
-		Terminal microeval();
 };
 
 class ParseGraph{
@@ -32,7 +30,7 @@ class ParseGraph{
 
 		void generate_graph(int size);
 		float fitness();
-		Terminal eval();
+		Value eval(vector<Value>);
 };
 
 #endif

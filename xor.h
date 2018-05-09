@@ -3,8 +3,13 @@
 #include <string>
 
 enum Terminal{
-	FALSE,
-	TRUE
+	X1,
+	X2
+};
+
+enum Value{
+	TRUE,
+	FALSE
 };
 
 enum NonTerminal{
@@ -21,8 +26,7 @@ const int num_nonterminal_types = 6;
 
 int num_arguments(NonTerminal non_terminal_type);
 std::string type_to_string(bool terminal, int id);
-Terminal microeval(NonTerminal id);
 float fitness();
-Terminal eval();
+Value eval();
 
 #endif

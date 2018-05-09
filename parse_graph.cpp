@@ -2,8 +2,8 @@
 #include <cstdlib>
 #include <string>
 #include <iostream>
+#include <iomainip>
 #include "random.h"
-#include "parse_graph.h"
 
 /*This class represents the node objects, which will be used to populate the parse graph. A node will either be active or inactive, and can be
 either a function or a terminal, and contains a set of pointers to its children. We may compute the value of a function node by recursing down
@@ -26,7 +26,6 @@ Node::Node(bool active, bool terminal, int size): active(active), terminal(termi
 		}
 	}
 }
-
 std::string Node::toString(){
 	std::string children_to_string = "";
 	if (!this->terminal){
@@ -37,11 +36,6 @@ std::string Node::toString(){
 	return (std::string("Node: ") + (this->active ?"ON ":"OFF") + (this->terminal ? " T ":" NT" ) + " VALUE: " + type_to_string(this->terminal,this->node_type) + " CHILDREN: " + children_to_string);
 }
 
-Terminal Node::microeval(){
-	// Need to call global microeval with appropriate id
-	return Terminal::FALSE;
-}
-
 ParseGraph::ParseGraph(const ParseGraph&){};
 
 ParseGraph::~ParseGraph(){};
@@ -49,8 +43,7 @@ ParseGraph::~ParseGraph(){};
 void ParseGraph::generate_graph(int size){
 	this->size = size;
 	graph = std::vector<std::vector<Node>>(size,std::vector<Node>(size)); //allocate memory for the graph (has size * size Node objects)
-	output = Node(true, false, size);
-	//setup the first node
+	output = Node(true, false, size); //setup the first node
 	for (int i = 0; i < size-1; i++){ //generate children
 		for (int j = 0; j < size; j++){
 			if (rand(0) % 2){
@@ -88,4 +81,11 @@ void ParseGraph::print_parse_graph(){
 		}
 		std::cout << std::endl;
 	}
+}
+
+Value ParseGraph::eval(vector<Value> inputs){
+	/*if (this){
+		return
+	}*/
+	return Value::TRUE;
 }

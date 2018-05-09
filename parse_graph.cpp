@@ -4,6 +4,7 @@
 #include <iostream>
 #include <iomanip>
 #include "random.h"
+#include "parse_graph.h"
 
 /*This class represents the node objects, which will be used to populate the parse graph. A node will either be active or inactive, and can be
 either a function or a terminal, and contains a set of pointers to its children. We may compute the value of a function node by recursing down

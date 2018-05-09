@@ -11,17 +11,13 @@ int num_arguments(NonTerminal non_terminal_type){
 	return 1;
 }
 
-Terminal microeval(NonTerminal id){
-	return Terminal::FALSE;
-}
-
 std::string type_to_string(bool terminal, int id){
 	if (terminal){
 		switch (id) {
 			case 0:
-				return "FALSE";
+				return "X1";
 			case 1:
-				return "TRUE ";
+				return "X2";
 			default:
 					std::cout << "ERROR in function type_to_string. Invalid ID." << std::endl;
 					exit(1);
@@ -51,6 +47,6 @@ float fitness(){
 	return 0.0;
 }
 
-Terminal eval(){
-	return Terminal::FALSE;
+Value eval(){
+	return Value::FALSE;
 }

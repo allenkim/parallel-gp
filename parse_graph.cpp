@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <string>
 #include <iostream>
+#include <iomanip>
 #include "random.h"
 #include "parse_graph.h"
 
@@ -84,7 +85,7 @@ void ParseGraph::print_parse_graph(){
 	std::cout << output.toString() << std::endl;
 	for (int i = 0; i < size; i++){
 		for (int j = 0; j < size; j++){
-			std::cout << graph[i][j].toString() << "\t";
+			std::cout << std::left << std::setw(45) << graph[i][j].toString();
 		}
 		std::cout << std::endl;
 	}

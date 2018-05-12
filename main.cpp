@@ -11,10 +11,17 @@ unsigned int *state;
 
 int main(){
 	init_rand_state(1);
-	GP gp(200,100);
+	// Population size, number of generations to run
+	GP gp(200,30);
 	float score = gp.initialize_pop(3);
 	printf("%f\n", score);
 	gp.run();
+	printf("\n");
+	gp.population[0]->print_parse_graph();
+	printf("\n");
+	gp.population[1]->print_parse_graph();
+	printf("\n");
+	gp.population[2]->print_parse_graph();
 	printf("\n");
 	return 0;
 }

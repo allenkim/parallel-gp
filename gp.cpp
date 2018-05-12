@@ -5,6 +5,12 @@
 
 extern float fitness(ParseGraph*);
 
+GP::~GP(){
+	for (int i = 0; i < pop_size; i++){
+		delete this->population[i];
+	}
+}
+
 float GP::initialize_pop(int grid_size){
 	for (int i = 0; i < this->pop_size; i++){
 		ParseGraph* g = new ParseGraph();
@@ -19,8 +25,6 @@ float GP::initialize_pop(int grid_size){
  * also g1 and g2 should have same sizes
  */
 void GP::crossover(ParseGraph* g1, ParseGraph* g2){
-	if (randf(0) > this->crossover_prob)
-		return;
 	int cp1x = -1, cp1y = -1, cp2x = -1, cp2y = -1;
 	unsigned int sample_count = 1;
 	for (int i = 0; i < g1->size; i++){
@@ -76,8 +80,6 @@ ParseGraph* GP::selection(int tournament_size){
 }
 
 void GP::global_mutation(ParseGraph* g){
-	if (randf(0) > this->global_mut_prob)
-		return;
 	ParseGraph* tmp = new ParseGraph();
 	tmp->generate_graph(g->size);
 	this->crossover(tmp, g);
@@ -85,8 +87,6 @@ void GP::global_mutation(ParseGraph* g){
 }
 
 void GP::link_mutation(ParseGraph* g){
-	if (randf(0) > this->link_mut_prob)
-		return;
 	unsigned int sample_count = 1;
 	int cp1x = -1, cp1y = -1, child_idx = -1;
 	for (int i = 0; i < g->size; i++){
@@ -127,9 +127,12 @@ float GP::next_gen(){
 		dad = this->selection(this->tournament_size);
 		mom = this->selection(this->tournament_size);
 		child = mom->copy();
-		this->crossover(dad,child);
-		this->global_mutation(child);
-		this->link_mutation(child);
+		if (randf(0) <= this->crossover_prob)
+			this->crossover(dad,child);
+		if (randf(0) <= this->global_mut_prob)
+			this->global_mutation(child);
+		if (randf(0) <= this->link_mut_prob)
+			this->link_mutation(child);
 		this->tmp_pop.push_back(child);
 	}
 	for (int i = 0; i < this->pop_size; i++){

@@ -32,6 +32,7 @@ int main(){
 	test1->generate_graph(3);
 	test1->print_parse_graph();
 	std::cout << value_to_string(test1->eval({FALSE,FALSE})) << std::endl;
+	std::cout << fitness(test1) << std::endl;
 	delete test1;
 	return 0;
 }

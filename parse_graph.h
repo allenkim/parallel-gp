@@ -3,7 +3,7 @@
 #include <vector>
 #include "xor.h"
 #include <string>
-
+enum Value : int;
 using std::vector;
 
 class Node{
@@ -31,7 +31,6 @@ class ParseGraph{
 
 		void generate_graph(int size);
 		void print_output();
-		float fitness();
 		Value eval(vector<Value>);
 };
 

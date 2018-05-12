@@ -91,8 +91,21 @@ Value compute_nonterminal(NonTerminal non_terminal_type,std::vector<Value> input
 	return FALSE;
 }
 
-float fitness(){
-	return 0.0;
+float fitness(ParseGraph* p){
+	int hamming_distance = 0;
+	if (p->eval({FALSE,FALSE}) == TRUE){
+		hamming_distance++;
+	}
+	if (p->eval({TRUE,FALSE}) == FALSE){
+		hamming_distance++;
+	}
+	if (p->eval({FALSE,TRUE}) == FALSE){
+		hamming_distance++;
+	}
+	if (p->eval({TRUE,TRUE}) == TRUE){
+		hamming_distance++;
+	}
+	return hamming_distance;
 }
 
 Value eval(){

@@ -7,33 +7,26 @@
 #include "gp.h"
 #include "xor.h"
 
-int *state;
-
-/*int main(){
-	init_rand_state(1);
-	ParseGraph* test1 = new ParseGraph();
-	ParseGraph* test2 = new ParseGraph();
-	test1->generate_graph(3);
-	test2->generate_graph(3);
-	test1->print_parse_graph();
-	printf("\n");
-	test2->print_parse_graph();
-	GP gp(2,5);
-	gp.crossover(test1, test2);
-	printf("\n");
-	test2->print_parse_graph();
-	delete test1;
-	delete test2;
-	return 0;
-}*/
+unsigned int *state;
 
 int main(){
-	omp_set_num_threads(4);
+	init_rand_state(1);
+	GP gp(200,100);
+	float score = gp.initialize_pop(3);
+	printf("%f\n", score);
+	gp.run();
+	printf("\n");
+	return 0;
+}
+
+/*
+int main(){
+	omp_set_num_threads(1);
 	init_rand_state(1);
 	ParseGraph* test1 = new ParseGraph();
 	double start_time = omp_get_wtime();
-	test1->generate_graph(10000);
-	//test1->print_parse_graph();
+	test1->generate_graph(3);
+	test1->print_parse_graph();
 	std::cout << value_to_string(test1->eval({FALSE,FALSE})) << std::endl;
 	std::cout << "FITNESS: " << fitness(test1) << std::endl;
 	double time = omp_get_wtime() - start_time;
@@ -41,3 +34,5 @@ int main(){
 	delete test1;
 	return 0;
 }
+*/
+

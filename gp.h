@@ -12,17 +12,23 @@ class GP{
 		vector<ParseGraph*> population;
 		int pop_size;
 		int max_gen_num;
-		float crossover_prob = 0.0;
-		float global_mut_prob = 0.0;
-		float link_mut_prob = 0.0;
+		int tournament_size = 7;
+		float crossover_prob = 0.7;
+		float global_mut_prob = 0.25;
+		float link_mut_prob = 0.25;
 
 		int curr_gen_num = 0;
-
-		void initialize_pop(int grid_size);
-		ParseGraph* selection();
+		
+		// Return average fitness of initial pop
+		float initialize_pop(int grid_size);
+		ParseGraph* selection(int tournament_size);
 		void crossover(ParseGraph* g1, ParseGraph* g2);
-		void mutation(ParseGraph* g);
-		void next_gen();
+		void global_mutation(ParseGraph* g);
+		void link_mutation(ParseGraph* g);
+		// Return average fitness at end
+		float eval_fitness();
+		float next_gen();
+		float run();
 	private:
 		vector<ParseGraph*> tmp_pop;
 };

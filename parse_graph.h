@@ -10,6 +10,7 @@ class Node{
 	public:
 		Node();
 		Node(bool active, bool terminal, int size);
+		Node(const Node &rhs);
 		std::string toString();
 		bool active;
 		bool terminal;
@@ -22,15 +23,16 @@ class Node{
 class ParseGraph{
 	public:
 		ParseGraph() : size(0) {};
-		ParseGraph(const ParseGraph&);
-		~ParseGraph();
 		void print_parse_graph();
 		Node output;
 		vector<vector<Node> > graph;
 		int size;
+		float fitness = -1.0;
 
+		void mark_active(int i, int j);
 		void generate_graph(int size);
 		void print_output();
+		ParseGraph* copy();
 		Value eval(vector<Value>) const;
 };
 

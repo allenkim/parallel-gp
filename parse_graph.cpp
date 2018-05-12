@@ -28,6 +28,13 @@ Node::Node(bool active, bool terminal, int size): active(active), terminal(termi
 	}
 }
 
+Node::Node(const Node &rhs){
+	terminal = rhs.terminal;
+	active = rhs.active;
+	node_type = rhs.node_type;
+	children = rhs.children;
+}
+
 std::string Node::toString(){
 	std::string children_to_string = "";
 	if (!this->terminal){
@@ -38,9 +45,16 @@ std::string Node::toString(){
 	return (std::string("Node:") + (this->active ?"ON ":"OFF") + (this->terminal ? " T ":" NT" ) + " VALUE: " + type_to_string(this->terminal,this->node_type) + "CHILDREN: " + children_to_string);
 }
 
-ParseGraph::ParseGraph(const ParseGraph&){};
-
-ParseGraph::~ParseGraph(){};
+void ParseGraph::mark_active(int i, int j){
+	if (!this->graph[i][j].active){
+		this->graph[i][j].active = true;
+		if (!graph[i][j].terminal){
+			for (unsigned int k = 0; k < graph[i][j].children.size(); k++){
+				this->mark_active(i+1, graph[i][j].children[k]);
+			}
+		}
+	}
+}
 
 void ParseGraph::generate_graph(int size){
 	this->size = size;
@@ -58,21 +72,8 @@ void ParseGraph::generate_graph(int size){
 	for (int i = 0; i < size; i++){
 		graph[size-1][i] = Node(false,true, size);
 	}
-	//mark the active nodes
-	for (unsigned int i = 0; i < output.children.size(); i++){
-		graph[0][output.children[i]].active = true;
-	}
-	for (int i = 0; i < size; i++){
-		for (int j = 0; j < size; j++){
-			if (graph[i][j].active){
-				if (!graph[i][j].terminal){
-					for (unsigned int k = 0; k < graph[i][j].children.size(); k++ ){
-						graph[i+1][graph[i][j].children[k]].active = true;
-					}
-				}
-			}
-		}
-	}
+	for (unsigned int i = 0; i < output.children.size(); i++)
+		this->mark_active(0,output.children[i]);
 }
 
 void ParseGraph::print_parse_graph(){
@@ -119,4 +120,12 @@ Value ParseGraph::eval(vector<Value> inputs) const{
 		input_to_this_function[k] = values[output.children[k]];
 	}
 	return compute_nonterminal((NonTerminal)output.node_type, input_to_this_function);
+}
+
+ParseGraph* ParseGraph::copy(){
+	ParseGraph* copyg = new ParseGraph();
+	copyg->output = this->output;
+	copyg->graph = this->graph;
+	copyg->size = this->size;
+	return copyg;
 }

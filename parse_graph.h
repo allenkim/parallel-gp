@@ -31,7 +31,7 @@ class ParseGraph{
 
 		void generate_graph(int size);
 		void print_output();
-		Value eval(vector<Value>);
+		Value eval(vector<Value>) const;
 };
 
 #endif

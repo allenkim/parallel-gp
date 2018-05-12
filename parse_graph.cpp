@@ -85,7 +85,7 @@ void ParseGraph::print_parse_graph(){
 	}
 }
 
-Value ParseGraph::eval(vector<Value> inputs){
+Value ParseGraph::eval(vector<Value> inputs) const{
 	vector<Value> values = vector<Value>(this->size);
 	//for the first row (of only terminals), determine the values of the terminals
 	for (int j = 0; j < size; j++){

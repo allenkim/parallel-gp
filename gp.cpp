@@ -13,7 +13,7 @@ void GP::initialize_pop(int grid_size){
 
 /* g1 is the dad and g2 is mom
  * dad dies and mom becomes child
- * also g1 and g2 should have same sizes...
+ * also g1 and g2 should have same sizes
  */
 void GP::crossover(ParseGraph* g1, ParseGraph* g2){
 	int cp1x = -1, cp1y = -1, cp2x = -1, cp2y = -1;
@@ -36,11 +36,16 @@ void GP::crossover(ParseGraph* g1, ParseGraph* g2){
 	}
 	if (cp1x == -1 || cp2x == -1)
 		return;
+	//printf("%d %d, %d %d\n", cp1x, cp1y, cp2x, cp2y);
 	g2->graph[cp2x][cp2y] = g1->graph[cp1x][cp1y];
 	for (int i = cp2x+1; i < g2->size; i++){
 		for (int j = 0; j < g2->size; j++){
-			g2->graph[i][j] = g1->graph[i][j];
+			if (g1->graph[i][j].active)
+				g2->graph[i][j] = g1->graph[i][j];
 		}
 	}
 }
+
+
+
 

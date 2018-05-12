@@ -2,7 +2,7 @@
 #include <string>
 #include <iostream>
 
-int num_arguments(NonTerminal non_terminal_type){
+unsigned int num_arguments(NonTerminal non_terminal_type){
 	if (non_terminal_type != NonTerminal::NOT){
 		if (non_terminal_type != NonTerminal::I){
 				return 2;
@@ -41,6 +41,54 @@ std::string type_to_string(bool terminal, int id){
 				exit(1);
 		}
 	}
+}
+
+std::string value_to_string(Value value){
+	if (value == TRUE){
+		return "TRUE";
+	}
+	return "FALSE";
+}
+
+Value compute_nonterminal(NonTerminal non_terminal_type,std::vector<Value> inputs){
+	if (inputs.size() != num_arguments(non_terminal_type))
+		std::cout << "The given non-terminal does not have the same arguments as the provided inputs." << std::endl;
+	switch(non_terminal_type){
+		case AND:
+			if ((inputs[0] == TRUE)&&(inputs[1] == TRUE))
+				return TRUE;
+			return FALSE;
+			break;
+		case NAND:
+			if ((inputs[0] == TRUE)&&(inputs[1] == TRUE))
+				return FALSE;
+			return TRUE;
+			break;
+		case OR:
+			if ((inputs[0] == TRUE)||(inputs[1] == TRUE))
+				return TRUE;
+			return FALSE;
+			break;
+		case NOR:
+			if ((inputs[0] == TRUE)||(inputs[1] == TRUE))
+				return FALSE;
+			return TRUE;
+			break;
+		case NOT:
+			if (inputs[0] == TRUE){
+				return FALSE;
+			}
+			return TRUE;
+			break;
+		case I:
+			return inputs[0];
+			break;
+		default:
+			std::cout << "Error. Invalid argument in function compute_nonterminal." << std::endl;
+			break;
+	}
+	std::cout << "ERROR. Reached code that should never be reached in function  compute_nonterminal" << std::endl;
+	return FALSE;
 }
 
 float fitness(){

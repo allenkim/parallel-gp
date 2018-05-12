@@ -13,6 +13,7 @@ class Node{
 		std::string toString();
 		bool active;
 		bool terminal;
+		//node value (if it is a terminal)
 		//value for terminal or nonterminal depending
 		int node_type;
 		vector<int> children;
@@ -29,6 +30,7 @@ class ParseGraph{
 		int size;
 
 		void generate_graph(int size);
+		void print_output();
 		float fitness();
 		Value eval(vector<Value>);
 };

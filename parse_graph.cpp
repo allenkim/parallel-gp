@@ -15,7 +15,7 @@ Node::Node(){
 
 }
 
-Node::Node(bool active, bool terminal, int size): active(active), terminal(terminal) {
+Node::Node(bool active, bool terminal, int size): active(active), terminal(terminal){
 	if (this->terminal){
 		node_type = rand(0) % num_terminal_types;
 	}else {
@@ -27,6 +27,7 @@ Node::Node(bool active, bool terminal, int size): active(active), terminal(termi
 		}
 	}
 }
+
 std::string Node::toString(){
 	std::string children_to_string = "";
 	if (!this->terminal){
@@ -45,12 +46,12 @@ void ParseGraph::generate_graph(int size){
 	this->size = size;
 	graph = std::vector<std::vector<Node>>(size,std::vector<Node>(size)); //allocate memory for the graph (has size * size Node objects)
 	output = Node(true, false, size); //setup the first node
-	for (int i = 0; i < size-1; i++){ //generate children
-		for (int j = 0; j < size; j++){
+	for (int i = 0; i < size-1; i++){ //generate children, for each row
+		for (int j = 0; j < size; j++){  //for each columm
 			if (rand(0) % 2){
-				graph[i][j] = Node(false, true, size);
+				graph[i][j] = Node(false, true, size); //terminal node
 			}else{
-				graph[i][j] = Node(false, false, size);
+				graph[i][j] = Node(false, false, size); //non-terminal node
 			}
 		}
 	}
@@ -85,8 +86,37 @@ void ParseGraph::print_parse_graph(){
 }
 
 Value ParseGraph::eval(vector<Value> inputs){
-	/*if (this){
-		return
-	}*/
-	return Value::TRUE;
+	vector<Value> values = vector<Value>(this->size);
+	//for the first row (of only terminals), determine the values of the terminals
+	for (int j = 0; j < size; j++){
+		if( graph[size-1][j].active){
+			values[j] = inputs[graph[size-1][j].node_type];
+		}
+	}
+	//for the next row, determine the values of the active nodes, based on the previous nodes
+	//do this for all the following rows
+	vector<Value> next_row_values;
+	for (int i = size-2; i >= 0; i--){
+		next_row_values = vector<Value>(this->size);
+		for (int j = 0; j < size; j++){
+			if (graph[i][j].active){
+				if (graph[i][j].terminal){
+					next_row_values[j] = inputs[graph[i][j].node_type];
+				}else{ //if the node is a nonterminal
+					vector<Value> input_to_this_function = vector<Value>(graph[i][j].children.size());
+					for (unsigned int k = 0; k < graph[i][j].children.size(); k++){
+						input_to_this_function[k] = values[graph[i][j].children[k]];
+					}
+					next_row_values[j] = compute_nonterminal((NonTerminal)graph[i][j].node_type, input_to_this_function);
+				}
+			}
+		}
+		values = next_row_values;
+	}
+	//finally, compute the output node
+	vector<Value> input_to_this_function = vector<Value>(output.children.size());
+	for (unsigned int k = 0; k < output.children.size(); k++){
+		input_to_this_function[k] = values[output.children[k]];
+	}
+	return compute_nonterminal((NonTerminal)output.node_type, input_to_this_function);
 }

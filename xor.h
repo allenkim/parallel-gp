@@ -2,13 +2,15 @@
 #define __XOR_H__
 #include <string>
 #include <vector>
+#include "parse_graph.h"
+class ParseGraph;
 
 enum Terminal{
 	X1,
 	X2
 };
 
-enum Value{
+enum Value: int {
 	TRUE,
 	FALSE
 };
@@ -30,7 +32,7 @@ unsigned int num_arguments(NonTerminal non_terminal_type);
 std::string type_to_string(bool terminal, int id);
 std::string value_to_string(Value);
 Value compute_nonterminal(NonTerminal,std::vector<Value>);
-float fitness();
+float fitness(ParseGraph*  p);
 Value eval();
 
 

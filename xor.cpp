@@ -1,4 +1,5 @@
 #include "xor.h"
+#include <omp.h>
 #include <string>
 #include <iostream>
 
@@ -91,8 +92,41 @@ Value compute_nonterminal(NonTerminal non_terminal_type,std::vector<Value> input
 	return FALSE;
 }
 
-float fitness(){
-	return 0.0;
+float fitness(ParseGraph* p){
+	omp_set_num_threads(4);
+	int hamming_distance = 0;
+	#pragma omp parallel
+		{
+			#pragma omp single
+			{
+				if (p->eval({FALSE,FALSE}) == TRUE){
+					#pragma omp atomic
+					hamming_distance++;
+				}
+			}
+			#pragma omp single
+			{
+				if (p->eval({TRUE,FALSE}) == FALSE){
+					#pragma omp atomic
+					hamming_distance++;
+				}
+			}
+			#pragma omp single
+			{
+				if (p->eval({FALSE,TRUE}) == FALSE){
+					#pragma omp atomic
+					hamming_distance++;
+				}
+			}
+			#pragma omp single
+			{
+				if (p->eval({TRUE,TRUE}) == TRUE){
+					#pragma omp atomic
+					hamming_distance++;
+				}
+			}
+		}
+	return -hamming_distance;
 }
 
 Value eval(){

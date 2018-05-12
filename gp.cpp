@@ -46,6 +46,3 @@ void GP::crossover(ParseGraph* g1, ParseGraph* g2){
 	}
 }
 
-
-
-

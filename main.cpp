@@ -28,11 +28,12 @@ int *state;
 }*/
 
 int main(){
+	omp_set_num_threads(4);
 	init_rand_state(1);
 	ParseGraph* test1 = new ParseGraph();
 	double start_time = omp_get_wtime();
-	test1->generate_graph(3);
-	test1->print_parse_graph();
+	test1->generate_graph(10000);
+	//test1->print_parse_graph();
 	std::cout << value_to_string(test1->eval({FALSE,FALSE})) << std::endl;
 	std::cout << "FITNESS: " << fitness(test1) << std::endl;
 	double time = omp_get_wtime() - start_time;

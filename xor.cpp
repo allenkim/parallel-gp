@@ -93,32 +93,32 @@ Value compute_nonterminal(NonTerminal non_terminal_type,std::vector<Value> input
 }
 
 float fitness(ParseGraph* p){
-	omp_set_num_threads(4);
 	int hamming_distance = 0;
+	//vector<vector<Value>> = {{FALSE,FALSE},{FALSE,TRUE},{TRUE,FALSE},{TRUE,TRUE}};
 	#pragma omp parallel
 		{
-			#pragma omp single
+			#pragma omp single nowait
 			{
 				if (p->eval({FALSE,FALSE}) == TRUE){
 					#pragma omp atomic
 					hamming_distance++;
 				}
 			}
-			#pragma omp single
+			#pragma omp single nowait
 			{
 				if (p->eval({TRUE,FALSE}) == FALSE){
 					#pragma omp atomic
 					hamming_distance++;
 				}
 			}
-			#pragma omp single
+			#pragma omp single nowait
 			{
 				if (p->eval({FALSE,TRUE}) == FALSE){
 					#pragma omp atomic
 					hamming_distance++;
 				}
 			}
-			#pragma omp single
+			#pragma omp single nowait
 			{
 				if (p->eval({TRUE,TRUE}) == TRUE){
 					#pragma omp atomic

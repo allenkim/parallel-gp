@@ -23,16 +23,18 @@ float GP::initialize_pop(int grid_size){
 /* g1 is the dad and g2 is mom
  * dad dies and mom becomes child
  * also g1 and g2 should have same sizes
+ * SSIAN
  */
 void GP::crossover(ParseGraph* g1, ParseGraph* g2){
-	int cp1x = -1, cp1y = -1, cp2x = -1, cp2y = -1;
+	int cp1x = -1, cp1y = -1;
+	int cp2x = -1, cp2y = -1;
 	unsigned int sample_count = 1;
 	for (int i = 0; i < g1->size; i++){
 		for (int j = 0; j < g1->size; j++){
 			if (g1->graph[i][j].active){
 				if (rand(0) % sample_count == sample_count - 1){
-					cp1x = i;
-					cp1y = j;
+					cp2x = i;
+					cp2y = j;
 				}
 			}
 			if (g2->graph[i][j].active){
@@ -106,8 +108,39 @@ void GP::link_mutation(ParseGraph* g){
 	if (cp1x == -1)
 		return;
 	int new_child = rand(0) % g->size;
+	g->mark_inactive(cp1x+1, child_idx);
 	g->graph[cp1x][cp1y].children[child_idx] = new_child;
+	//printf("%d %d %d %d\n", cp1x, cp1y, child_idx, new_child);
 	g->mark_active(cp1x+1,new_child);
+}
+
+void GP::node_mutation(ParseGraph* g){
+	unsigned int sample_count = 1;
+	int cp1x = -1, cp1y = -1;
+	for (int i = 0; i < g->size; i++){
+		for (int j = 0; j < g->size; j++){
+			if (g->graph[i][j].active){
+				if (rand(0) % sample_count == sample_count - 1){
+					cp1x = i;
+					cp1y = j;
+				}
+			}
+		}
+	}
+	if (cp1x == -1)
+		return;
+	g->mark_inactive(cp1x, cp1y);
+	if (cp1x == g->size - 1)
+		g->graph[cp1x][cp1y] = Node(false, true, g->size);
+	else{
+		if (rand(0) % 2){
+			g->graph[cp1x][cp1y] = Node(false, true, g->size); //terminal node
+		}else{
+			g->graph[cp1x][cp1y] = Node(false, false, g->size); //non-terminal node
+		}
+	}
+	g->mark_active(cp1x,cp1y);
+
 }
 
 float GP::eval_fitness(){
@@ -133,6 +166,8 @@ float GP::next_gen(){
 			this->global_mutation(child);
 		if (randf(0) <= this->link_mut_prob)
 			this->link_mutation(child);
+		if (randf(0) <= this->node_mut_prob)
+			this->node_mutation(child);
 		this->tmp_pop.push_back(child);
 	}
 	for (int i = 0; i < this->pop_size; i++){
@@ -148,7 +183,7 @@ float GP::run(){
 	float score = -1.0;
 	for (int i = 0; i < max_gen_num; i++){
 		score = this->next_gen();
-		printf("%f\n", score);
+		printf("Gen %d: %f\n", this->curr_gen_num, score);
 	}
 	return score;
 }

@@ -30,6 +30,7 @@ class ParseGraph{
 		float fitness = -1.0;
 
 		void mark_active(int i, int j);
+		void mark_inactive(int i, int j);
 		void generate_graph(int size);
 		void print_output();
 		ParseGraph* copy();

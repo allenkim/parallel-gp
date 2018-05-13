@@ -45,7 +45,23 @@ std::string Node::toString(){
 	return (std::string("Node:") + (this->active ?"ON ":"OFF") + (this->terminal ? " T ":" NT" ) + " VALUE: " + type_to_string(this->terminal,this->node_type) + "CHILDREN: " + children_to_string);
 }
 
+void ParseGraph::mark_inactive(int i, int j){
+	if (i >= this->size || j >= this->size)
+		return;
+	if (this->graph[i][j].active){
+		this->graph[i][j].active = false;
+		if (!graph[i][j].terminal){
+			for (unsigned int k = 0; k < graph[i][j].children.size(); k++){
+				this->mark_inactive(i+1, graph[i][j].children[k]);
+			}
+		}
+	}
+}
+
+
 void ParseGraph::mark_active(int i, int j){
+	if (i >= this->size || j >= this->size)
+		return;
 	if (!this->graph[i][j].active){
 		this->graph[i][j].active = true;
 		if (!graph[i][j].terminal){

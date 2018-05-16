@@ -8,24 +8,12 @@
 #include "xor.h"
 
 unsigned int *state;
+int NUM_THREADS;
 
 // Constants found in problem specific header
-float time_gp(){
-	float start_time = omp_get_wtime();
-	init_rand_state(1, true, 1);
-	GP gp(POP_SIZE,NUM_GEN);
-	gp.tournament_size = TOURN_SIZE;
-	gp.crossover_prob = CROSSOVER_PROB;
-	gp.global_mut_prob = GLOBAL_MUT_PROB;
-	gp.link_mut_prob = LINK_MUT_PROB;
-	gp.node_mut_prob = NODE_MUT_PROB;
-	gp.initialize_pop(GRID_SIZE);
-	gp.run();
-	return omp_get_wtime() - start_time;
-}
 
 ParseGraph* find_best_fit(bool verbose, bool det, int seed = 1){
-	init_rand_state(1, det, seed);
+	init_rand_state(NUM_THREADS, det, seed);
 	GP gp(POP_SIZE,NUM_GEN);
 	gp.tournament_size = TOURN_SIZE;
 	gp.crossover_prob = CROSSOVER_PROB;
@@ -46,25 +34,35 @@ ParseGraph* find_best_fit(bool verbose, bool det, int seed = 1){
 ParseGraph* find_best_fit_ensemble(int size, bool det, bool verbose = false){
 	ParseGraph* global_best = NULL;
 	float global_fitness = -1.0;
+	#pragma omp parallel for
 	for (int i = 0; i < size; i++){
 		ParseGraph* best = find_best_fit(verbose, det, i);
-		if (best->fitness > global_fitness){
-			if (global_best)
-				delete global_best;
-			global_best = best;
-			global_fitness = best->fitness;
+		#pragma omp critical
+		{
+			if (best->fitness > global_fitness){
+				if (global_best)
+					delete global_best;
+				global_best = best;
+				global_fitness = best->fitness;
+			}
 		}
 	}
 	return global_best;
 }
 
 
-int main(){
-	omp_set_num_threads(1);
-	ParseGraph* best = find_best_fit_ensemble(20, false, false);
+int main(int argc, char* argv[]){
+	NUM_THREADS = 4;
+	if (argc >= 2)
+		NUM_THREADS = atoi(argv[1]);
+	omp_set_num_threads(NUM_THREADS);
+	double start_time = omp_get_wtime();
+	ParseGraph* best = find_best_fit_ensemble(30, false, false);
+	double total_time = omp_get_wtime() - start_time;
 	//ParseGraph* best = find_best_fit(true, false);
 	printf("Fitness: %f\n", best->fitness);
 	best->print_parse_graph();
+	printf("Time: %gs\n", total_time);
 	return 0;
 }
 

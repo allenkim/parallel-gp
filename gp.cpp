@@ -184,16 +184,20 @@ void GP::node_mutation(ParseGraph* g){
 
 float GP::eval_fitness(){
 	float total = 0.0;
+	#pragma omp parallel for
 	for (int i = 0; i < this->pop_size; i++){
 		if (this->population[i]->fitness < 0)
 			this->population[i]->fitness = fitness(this->population[i]);
-		if (this->population[i]->fitness > this->best_fitness){
-			this->best_fitness = this->population[i]->fitness;
-			if (this->best)
-				delete this->best;
-			this->best = this->population[i]->copy();
+		#pragma omp critical
+		{
+			if (this->population[i]->fitness > this->best_fitness){
+				this->best_fitness = this->population[i]->fitness;
+				if (this->best)
+					delete this->best;
+				this->best = this->population[i]->copy();
+			}
+			total += this->population[i]->fitness;
 		}
-		total += this->population[i]->fitness;
 	}
 	return total / this->pop_size;
 }

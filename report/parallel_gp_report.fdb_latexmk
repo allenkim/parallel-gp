@@ -1,0 +1,10 @@
+# Fdb version 3
+["pdflatex"] 1526509073 "parallel_gp_report.tex" "parallel_gp_report.pdf" "parallel_gp_report" 1526509073
+  "/usr/share/texmf-dist/web2c/texmf.cnf" 1520157258 32585 d82bbcf7626b7842c87671687479e852 ""
+  "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1522364051 7738161 cbc0cd75b8aa88ba7baddd14fd79ca8d ""
+  "IEEEtran.cls" 0 -1 0 ""
+  "parallel_gp_report.aux" 1526509073 8 a94a2480d3289e625eea47cd1b285758 ""
+  "parallel_gp_report.tex" 1526509063 701 906d6ea36958b764462094a907bed98c ""
+  (generated)
+  "parallel_gp_report.log"
+  "parallel_gp_report.pdf"

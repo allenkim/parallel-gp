@@ -12,6 +12,12 @@ GP::~GP(){
 }
 
 float GP::initialize_pop(int grid_size){
+	if (this->population.size() > 0){
+		for (int i = 0; i < this->pop_size; i++){
+			delete population[i];
+		}
+		this->population.clear();
+	}
 	for (int i = 0; i < this->pop_size; i++){
 		ParseGraph* g = new ParseGraph();
 		g->generate_graph(grid_size);
@@ -179,11 +185,12 @@ float GP::next_gen(){
 	return avg_fitness;
 }
 
-float GP::run(){
+float GP::run(bool verbose){
 	float score = -1.0;
 	for (int i = 0; i < max_gen_num; i++){
 		score = this->next_gen();
-		printf("Gen %d: %f\n", this->curr_gen_num, score);
+		if (verbose)
+			printf("Gen %d: %f\n", this->curr_gen_num, score);
 	}
 	return score;
 }

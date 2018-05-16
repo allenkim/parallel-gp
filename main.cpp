@@ -15,7 +15,7 @@ int main(){
 	GP gp(200,20);
 	float score = gp.initialize_pop(3);
 	printf("%f\n", score);
-	gp.run();
+	gp.run(true);
 	printf("\n");
 	return 0;
 }

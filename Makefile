@@ -4,7 +4,7 @@ HEADERS := $(wildcard *.h)
 HD_OBJS := $(HEADERS:.h=.o)
 TARGETS := main
 
-CFLAGS=-Wall -O2 -std=c++11 -g
+CFLAGS=-Wall -O2 -std=c++11
 CC=g++
 LDADD=-fopenmp
 

@@ -31,7 +31,7 @@ class GP{
 		// Return average fitness at end
 		float eval_fitness();
 		float next_gen();
-		float run();
+		float run(bool verbose);
 	private:
 		vector<ParseGraph*> tmp_pop;
 };

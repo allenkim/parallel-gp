@@ -61,8 +61,8 @@ ParseGraph* find_best_fit_ensemble(int size, bool det, bool verbose = false){
 
 int main(){
 	omp_set_num_threads(1);
-	//ParseGraph* best = find_best_fit_ensemble(15, false, true);
-	ParseGraph* best = find_best_fit(true, false);
+	ParseGraph* best = find_best_fit_ensemble(20, false, false);
+	//ParseGraph* best = find_best_fit(true, false);
 	printf("Fitness: %f\n", best->fitness);
 	best->print_parse_graph();
 	return 0;

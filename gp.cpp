@@ -38,7 +38,7 @@ float GP::initialize_pop(int grid_size, bool verbose){
 void GP::crossover(ParseGraph* g1, ParseGraph* g2){
 	int cp1x = -1, cp1y = -1;
 	int cp2x = -1, cp2y = -1;
-	unsigned int sample_count = 1;
+	unsigned int sample_count = 2;
 	for (int i = 0; i < g1->size; i++){
 		for (int j = 0; j < g1->size; j++){
 			if (g1->graph[i][j].active){
@@ -50,7 +50,7 @@ void GP::crossover(ParseGraph* g1, ParseGraph* g2){
 			}
 		}
 	}
-	sample_count = 1;
+	sample_count = 2;
 	for (int i = 0; i < g1->size; i++){
 		for (int j = 0; j < g1->size; j++){
 			if (g2->graph[i][j].active){
@@ -62,10 +62,22 @@ void GP::crossover(ParseGraph* g1, ParseGraph* g2){
 			}
 		}
 	}
-	if (cp1x == -1 || cp2x == -1)
-		return;
 	//printf("%d %d, %d %d\n", cp1x, cp1y, cp2x, cp2y);
-	g2->graph[cp2x][cp2y] = g1->graph[cp1x][cp1y];
+	if (cp1x == -1){
+		if (cp2x == -1){
+			g2->output = g1->output;
+			g2->graph = g1->graph;
+		}
+		else{
+			g2->graph[cp2x][cp2y] = g1->output;
+		}
+	}
+	else if (cp2x == -1){
+		g2->output = g1->graph[cp1x][cp1y];
+	}
+	else{
+		g2->graph[cp2x][cp2y] = g1->graph[cp1x][cp1y];
+	}
 	for (int i = cp2x+1; i < g2->size - 1; i++){
 		for (int j = 0; j < g2->size; j++){
 			int g1idx = i-cp2x+cp1x;
@@ -133,7 +145,7 @@ void GP::link_mutation(ParseGraph* g){
 }
 
 void GP::node_mutation(ParseGraph* g){
-	unsigned int sample_count = 1;
+	unsigned int sample_count = 2;
 	int cp1x = -1, cp1y = -1;
 	for (int i = 0; i < g->size; i++){
 		for (int j = 0; j < g->size; j++){
@@ -145,19 +157,28 @@ void GP::node_mutation(ParseGraph* g){
 			}
 		}
 	}
-	if (cp1x == -1)
-		return;
-	g->mark_inactive(cp1x, cp1y);
-	if (cp1x == g->size - 1)
-		g->graph[cp1x][cp1y] = Node(false, true, g->size);
-	else{
-		if (rand(0) % 2){
-			g->graph[cp1x][cp1y] = Node(false, true, g->size); //terminal node
-		}else{
-			g->graph[cp1x][cp1y] = Node(false, false, g->size); //non-terminal node
+	if (cp1x == -1){
+		g->output = Node(false,false,g->size);
+		for (int i = 0; i < g->size; i++){
+			g->mark_inactive(0,i);
+		}
+		for (unsigned int i = 0; i < g->output.children.size(); i++){
+			g->mark_active(0,g->output.children[i]);
 		}
 	}
-	g->mark_active(cp1x,cp1y);
+	else{
+		g->mark_inactive(cp1x, cp1y);
+		if (cp1x == g->size - 1)
+			g->graph[cp1x][cp1y] = Node(false, true, g->size);
+		else{
+			if (rand(0) % 2){
+				g->graph[cp1x][cp1y] = Node(false, true, g->size); //terminal node
+			}else{
+				g->graph[cp1x][cp1y] = Node(false, false, g->size); //non-terminal node
+			}
+		}
+		g->mark_active(cp1x,cp1y);
+	}
 
 }
 

@@ -143,5 +143,6 @@ ParseGraph* ParseGraph::copy(){
 	copyg->output = this->output;
 	copyg->graph = this->graph;
 	copyg->size = this->size;
+	copyg->fitness = this->fitness;
 	return copyg;
 }

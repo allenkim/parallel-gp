@@ -2,14 +2,14 @@
 #include <ctime>
 #include "random.h"
 
-void init_rand_state(int num_threads, int seed){
-	if (seed == -1)
-		srand(time(NULL));
-	else
+void init_rand_state(int num_threads, bool det, int seed){
+	if (det)
 		srand(seed);
+	else
+		srand(time(NULL));
 	state = new unsigned int[num_threads*4];
 	for (int i = 0; i < num_threads*4; i++){
-		state[i] = i * 5039 + 479001597 + rand() % 39916801;
+		state[i] = i * 5039 + 479001597 + rand() + seed % 39916801;
 	}
 }
 

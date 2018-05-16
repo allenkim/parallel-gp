@@ -24,8 +24,8 @@ float time_gp(){
 	return omp_get_wtime() - start_time;
 }
 
-void find_best_fit(bool verbose){
-	init_rand_state(1);
+ParseGraph* find_best_fit(bool verbose, bool det, int seed = -1){
+	init_rand_state(1, det, seed);
 	GP gp(POP_SIZE,NUM_GEN);
 	gp.tournament_size = TOURN_SIZE;
 	gp.crossover_prob = CROSSOVER_PROB;
@@ -34,14 +34,31 @@ void find_best_fit(bool verbose){
 	gp.node_mut_prob = NODE_MUT_PROB;
 	gp.initialize_pop(GRID_SIZE, verbose);
 	gp.run(verbose);
+	if (verbose)
+		printf("Fitness: %f\n", gp.best_fitness);
+	return gp.best->copy();
+}
 
-	printf("Fitness: %f\n", gp.best_fitness);
-	gp.best->print_parse_graph();
+ParseGraph* find_best_fit_ensemble(int size, bool det, bool verbose = false){
+	ParseGraph* global_best = NULL;
+	float global_fitness = -1.0;
+	for (int i = 0; i < size; i++){
+		ParseGraph* best = find_best_fit(verbose, det, i);
+		if (best->fitness > global_fitness){
+			if (global_best)
+				delete global_best;
+			global_best = best;
+			global_fitness = best->fitness;
+		}
+	}
+	return global_best;
 }
 
 int main(){
 	omp_set_num_threads(1);
-	find_best_fit(true);
+	ParseGraph* best = find_best_fit_ensemble(15, false);
+	printf("Fitness: %f\n", best->fitness);
+	best->print_parse_graph();
 	return 0;
 }
 

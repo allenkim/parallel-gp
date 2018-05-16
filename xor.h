@@ -5,7 +5,7 @@
 #include "parse_graph.h"
 class ParseGraph;
 
-const int GRID_SIZE = 2;
+const int GRID_SIZE = 3;
 const int POP_SIZE = 200;
 const int NUM_GEN = 20;
 const int TOURN_SIZE = 8;

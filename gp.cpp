@@ -9,6 +9,7 @@ GP::~GP(){
 	for (int i = 0; i < pop_size; i++){
 		delete this->population[i];
 	}
+	delete this->best;
 }
 
 float GP::initialize_pop(int grid_size, bool verbose){
@@ -157,6 +158,12 @@ float GP::eval_fitness(){
 	for (int i = 0; i < this->pop_size; i++){
 		if (this->population[i]->fitness < 0)
 			this->population[i]->fitness = fitness(this->population[i]);
+		if (this->population[i]->fitness > this->best_fitness){
+			this->best_fitness = this->population[i]->fitness;
+			if (this->best)
+				delete this->best;
+			this->best = this->population[i]->copy();
+		}
 		total += this->population[i]->fitness;
 	}
 	return total / this->pop_size;

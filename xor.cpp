@@ -20,6 +20,7 @@ std::string type_to_string(bool terminal, int id){
 			case 1:
 				return "X2   ";
 			default:
+					std::cout << id << std::endl;
 					std::cout << "ERROR in function type_to_string. Invalid ID." << std::endl;
 					exit(1);
 		}

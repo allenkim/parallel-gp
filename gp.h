@@ -18,6 +18,8 @@ class GP{
 		float global_mut_prob = 0.0;
 		float link_mut_prob = 0.0;
 		float node_mut_prob = 0.0;
+		float best_fitness = -1.0;
+		ParseGraph* best = NULL;
 
 		int curr_gen_num = 0;
 		

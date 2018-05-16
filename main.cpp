@@ -9,10 +9,22 @@
 
 unsigned int *state;
 
+// Constants found in problem specific header
+float time_gp(){
+	float start_time = omp_get_wtime();
+	init_rand_state(1, 1);
+	GP gp(POP_SIZE,NUM_GEN);
+	gp.tournament_size = TOURN_SIZE;
+	gp.crossover_prob = CROSSOVER_PROB;
+	gp.global_mut_prob = GLOBAL_MUT_PROB;
+	gp.link_mut_prob = LINK_MUT_PROB;
+	gp.node_mut_prob = NODE_MUT_PROB;
+	gp.initialize_pop(GRID_SIZE);
+	gp.run();
+	return omp_get_wtime() - start_time;
+}
 
-
-int main(){
-	// Constants found in problem specific header
+void find_best_fit(bool verbose){
 	init_rand_state(1);
 	GP gp(POP_SIZE,NUM_GEN);
 	gp.tournament_size = TOURN_SIZE;
@@ -20,9 +32,16 @@ int main(){
 	gp.global_mut_prob = GLOBAL_MUT_PROB;
 	gp.link_mut_prob = LINK_MUT_PROB;
 	gp.node_mut_prob = NODE_MUT_PROB;
-	gp.initialize_pop(GRID_SIZE, true);
-	gp.run(true);
-	printf("\n");
+	gp.initialize_pop(GRID_SIZE, verbose);
+	gp.run(verbose);
+
+	printf("Fitness: %f\n", gp.best_fitness);
+	gp.best->print_parse_graph();
+}
+
+int main(){
+	omp_set_num_threads(1);
+	find_best_fit(true);
 	return 0;
 }
 

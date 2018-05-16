@@ -6,7 +6,7 @@
 extern float fitness(ParseGraph*);
 
 GP::~GP(){
-	for (int i = 0; i < pop_size; i++){
+	for (unsigned int i = 0; i < this->population.size(); i++){
 		delete this->population[i];
 	}
 	delete this->best;
@@ -43,15 +43,22 @@ void GP::crossover(ParseGraph* g1, ParseGraph* g2){
 		for (int j = 0; j < g1->size; j++){
 			if (g1->graph[i][j].active){
 				if (rand(0) % sample_count == sample_count - 1){
-					cp2x = i;
-					cp2y = j;
+					cp1x = i;
+					cp1y = j;
 				}
+				sample_count++;
 			}
+		}
+	}
+	sample_count = 1;
+	for (int i = 0; i < g1->size; i++){
+		for (int j = 0; j < g1->size; j++){
 			if (g2->graph[i][j].active){
 				if (rand(0) % sample_count == sample_count - 1){
 					cp2x = i;
 					cp2y = j;
 				}
+				sample_count++;
 			}
 		}
 	}
@@ -59,10 +66,11 @@ void GP::crossover(ParseGraph* g1, ParseGraph* g2){
 		return;
 	//printf("%d %d, %d %d\n", cp1x, cp1y, cp2x, cp2y);
 	g2->graph[cp2x][cp2y] = g1->graph[cp1x][cp1y];
-	for (int i = cp2x+1; i < g2->size; i++){
+	for (int i = cp2x+1; i < g2->size - 1; i++){
 		for (int j = 0; j < g2->size; j++){
-			if (g1->graph[i][j].active)
-				g2->graph[i][j] = g1->graph[i][j];
+			int g1idx = i-cp2x+cp1x;
+			if (g1idx < g1->size && g1->graph[g1idx][j].active)
+				g2->graph[i][j] = g1->graph[g1idx][j];
 		}
 	}
 }
@@ -176,14 +184,22 @@ float GP::next_gen(){
 		dad = this->selection(this->tournament_size);
 		mom = this->selection(this->tournament_size);
 		child = mom->copy();
-		if (randf(0) <= this->crossover_prob)
+		if (randf(0) <= this->crossover_prob){
 			this->crossover(dad,child);
-		if (randf(0) <= this->global_mut_prob)
+			//printf("Crossover\n");
+		}
+		if (randf(0) <= this->global_mut_prob){
 			this->global_mutation(child);
-		if (randf(0) <= this->link_mut_prob)
+			//printf("Global Mutation\n");
+		}
+		if (randf(0) <= this->link_mut_prob){
 			this->link_mutation(child);
-		if (randf(0) <= this->node_mut_prob)
+			//printf("Link Mutation\n");
+		}
+		if (randf(0) <= this->node_mut_prob){
 			this->node_mutation(child);
+			//printf("Node Mutation\n");
+		}
 		this->tmp_pop.push_back(child);
 	}
 	for (int i = 0; i < this->pop_size; i++){

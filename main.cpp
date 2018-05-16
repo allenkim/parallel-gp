@@ -12,7 +12,7 @@ unsigned int *state;
 // Constants found in problem specific header
 float time_gp(){
 	float start_time = omp_get_wtime();
-	init_rand_state(1, 1);
+	init_rand_state(1, true, 1);
 	GP gp(POP_SIZE,NUM_GEN);
 	gp.tournament_size = TOURN_SIZE;
 	gp.crossover_prob = CROSSOVER_PROB;
@@ -24,7 +24,7 @@ float time_gp(){
 	return omp_get_wtime() - start_time;
 }
 
-ParseGraph* find_best_fit(bool verbose, bool det, int seed = -1){
+ParseGraph* find_best_fit(bool verbose, bool det, int seed = 1){
 	init_rand_state(1, det, seed);
 	GP gp(POP_SIZE,NUM_GEN);
 	gp.tournament_size = TOURN_SIZE;
@@ -36,6 +36,10 @@ ParseGraph* find_best_fit(bool verbose, bool det, int seed = -1){
 	gp.run(verbose);
 	if (verbose)
 		printf("Fitness: %f\n", gp.best_fitness);
+	/*
+	for (int i = 0; i < POP_SIZE; i++){
+		gp.population[i]->print_parse_graph();
+	}*/
 	return gp.best->copy();
 }
 
@@ -54,14 +58,31 @@ ParseGraph* find_best_fit_ensemble(int size, bool det, bool verbose = false){
 	return global_best;
 }
 
+
 int main(){
 	omp_set_num_threads(1);
-	ParseGraph* best = find_best_fit_ensemble(15, false);
+	//ParseGraph* best = find_best_fit_ensemble(15, false, true);
+	ParseGraph* best = find_best_fit(true, false);
 	printf("Fitness: %f\n", best->fitness);
 	best->print_parse_graph();
 	return 0;
 }
 
+/*
+int main(){
+	init_rand_state(1, false, 1);
+	ParseGraph* test1 = new ParseGraph();
+	ParseGraph* test2 = new ParseGraph();
+	test1->generate_graph(3);
+	test2->generate_graph(3);
+	GP gp(2,5);
+	test1->print_parse_graph();
+	test2->print_parse_graph();
+	gp.crossover(test1,test2);
+	test2->print_parse_graph();
+	return 0;
+}
+*/
 /*
 int main(){
 	omp_set_num_threads(1);

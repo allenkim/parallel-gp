@@ -9,12 +9,18 @@
 
 unsigned int *state;
 
+
+
 int main(){
+	// Constants found in problem specific header
 	init_rand_state(1);
-	// Population size, number of generations to run
-	GP gp(200,20);
-	float score = gp.initialize_pop(3);
-	printf("%f\n", score);
+	GP gp(POP_SIZE,NUM_GEN);
+	gp.tournament_size = TOURN_SIZE;
+	gp.crossover_prob = CROSSOVER_PROB;
+	gp.global_mut_prob = GLOBAL_MUT_PROB;
+	gp.link_mut_prob = LINK_MUT_PROB;
+	gp.node_mut_prob = NODE_MUT_PROB;
+	gp.initialize_pop(GRID_SIZE, true);
 	gp.run(true);
 	printf("\n");
 	return 0;

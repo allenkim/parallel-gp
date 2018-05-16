@@ -11,7 +11,7 @@ GP::~GP(){
 	}
 }
 
-float GP::initialize_pop(int grid_size){
+float GP::initialize_pop(int grid_size, bool verbose){
 	if (this->population.size() > 0){
 		for (int i = 0; i < this->pop_size; i++){
 			delete population[i];
@@ -23,7 +23,10 @@ float GP::initialize_pop(int grid_size){
 		g->generate_graph(grid_size);
 		this->population.push_back(g);
 	}
-	return this->eval_fitness();
+	float fitness = this->eval_fitness();
+	if (verbose)
+		printf("Gen 0: %f\n", fitness);
+	return fitness;
 }
 
 /* g1 is the dad and g2 is mom

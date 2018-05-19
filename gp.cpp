@@ -42,7 +42,7 @@ void GP::crossover(ParseGraph* g1, ParseGraph* g2){
 	for (int i = 0; i < g1->size; i++){
 		for (int j = 0; j < g1->size; j++){
 			if (g1->graph[i][j].active){
-				if (rand(0) % sample_count == sample_count - 1){
+				if (xorand() % sample_count == sample_count - 1){
 					cp1x = i;
 					cp1y = j;
 				}
@@ -54,7 +54,7 @@ void GP::crossover(ParseGraph* g1, ParseGraph* g2){
 	for (int i = 0; i < g1->size; i++){
 		for (int j = 0; j < g1->size; j++){
 			if (g2->graph[i][j].active){
-				if (rand(0) % sample_count == sample_count - 1){
+				if (xorand() % sample_count == sample_count - 1){
 					cp2x = i;
 					cp2y = j;
 				}
@@ -90,22 +90,13 @@ void GP::crossover(ParseGraph* g1, ParseGraph* g2){
 ParseGraph* GP::selection(int tournament_size){
 	if (tournament_size > this->pop_size)
 		tournament_size = this->pop_size;
-	int s = tournament_size;
-	int left = this->pop_size;
-	int start = 0;
-	while (s--){
-		int r = start;
-		r += rand(0) % left;
-		ParseGraph* tmp = this->population[r];
-		this->population[r] = this->population[start];
-		this->population[start] = tmp;
-		++start;
-		--left;
-	}
-	ParseGraph* best = this->population[0];
-	for (int i = 1; i < tournament_size; i++){
-		if (this->population[i]->fitness > best->fitness){
-			best = this->population[i];
+	ParseGraph* best = NULL;
+	float best_fitness = -1.0;
+	for (int i = 0; i < tournament_size; i++){
+		int r = xorand() % this->pop_size;
+		if (this->population[r]->fitness > best_fitness){
+			best = this->population[r];
+			best_fitness = this->population[r]->fitness;
 		}
 	}
 	return best;
@@ -126,7 +117,7 @@ void GP::link_mutation(ParseGraph* g){
 			int num_child = g->graph[i][j].children.size();
 			if (g->graph[i][j].active && num_child > 0){
 				for (int k = 0; k < num_child; k++){
-					if (rand(0) % sample_count == sample_count - 1){
+					if (xorand() % sample_count == sample_count - 1){
 						cp1x = i;
 						cp1y = j;
 						child_idx = k;
@@ -137,7 +128,7 @@ void GP::link_mutation(ParseGraph* g){
 	}
 	if (cp1x == -1)
 		return;
-	int new_child = rand(0) % g->size;
+	int new_child = xorand() % g->size;
 	g->mark_inactive(cp1x+1, child_idx);
 	g->graph[cp1x][cp1y].children[child_idx] = new_child;
 	//printf("%d %d %d %d\n", cp1x, cp1y, child_idx, new_child);
@@ -150,7 +141,7 @@ void GP::node_mutation(ParseGraph* g){
 	for (int i = 0; i < g->size; i++){
 		for (int j = 0; j < g->size; j++){
 			if (g->graph[i][j].active){
-				if (rand(0) % sample_count == sample_count - 1){
+				if (xorand() % sample_count == sample_count - 1){
 					cp1x = i;
 					cp1y = j;
 				}
@@ -171,7 +162,7 @@ void GP::node_mutation(ParseGraph* g){
 		if (cp1x == g->size - 1)
 			g->graph[cp1x][cp1y] = Node(false, true, g->size);
 		else{
-			if (rand(0) % 2){
+			if (xorand() % 2){
 				g->graph[cp1x][cp1y] = Node(false, true, g->size); //terminal node
 			}else{
 				g->graph[cp1x][cp1y] = Node(false, false, g->size); //non-terminal node
@@ -204,29 +195,32 @@ float GP::eval_fitness(){
 
 float GP::next_gen(){
 	this->tmp_pop.clear();
-	ParseGraph *dad, *mom, *child;
+	this->tmp_pop.resize(this->pop_size);
+	#pragma omp parallel for 
 	for (int i = 0; i < this->pop_size; i++){
+		ParseGraph *dad, *mom, *child;
 		dad = this->selection(this->tournament_size);
 		mom = this->selection(this->tournament_size);
 		child = mom->copy();
-		if (randf(0) <= this->crossover_prob){
+		if (xorandf() <= this->crossover_prob){
 			this->crossover(dad,child);
 			//printf("Crossover\n");
 		}
-		if (randf(0) <= this->global_mut_prob){
+		if (xorandf() <= this->global_mut_prob){
 			this->global_mutation(child);
 			//printf("Global Mutation\n");
 		}
-		if (randf(0) <= this->link_mut_prob){
+		if (xorandf() <= this->link_mut_prob){
 			this->link_mutation(child);
 			//printf("Link Mutation\n");
 		}
-		if (randf(0) <= this->node_mut_prob){
+		if (xorandf() <= this->node_mut_prob){
 			this->node_mutation(child);
 			//printf("Node Mutation\n");
 		}
-		this->tmp_pop.push_back(child);
+		this->tmp_pop[i] = child;
 	}
+	#pragma omp parallel for 
 	for (int i = 0; i < this->pop_size; i++){
 		delete this->population[i];
 	}

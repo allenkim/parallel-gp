@@ -5,8 +5,7 @@
 #include "random.h"
 #include "parse_graph.h"
 #include "gp.h"
-#include "xor.h"
-
+#include "xor.h" 
 unsigned int *state;
 int NUM_THREADS;
 
@@ -14,7 +13,7 @@ int NUM_THREADS;
 
 ParseGraph* find_best_fit(bool verbose, bool det, int seed = 1){
 	init_rand_state(NUM_THREADS, det, seed);
-	GP gp(POP_SIZE,NUM_GEN);
+	GP gp(NUM_THREADS, POP_SIZE,NUM_GEN);
 	gp.tournament_size = TOURN_SIZE;
 	gp.crossover_prob = CROSSOVER_PROB;
 	gp.global_mut_prob = GLOBAL_MUT_PROB;
@@ -57,7 +56,7 @@ int main(int argc, char* argv[]){
 		NUM_THREADS = atoi(argv[1]);
 	omp_set_num_threads(NUM_THREADS);
 	double start_time = omp_get_wtime();
-	ParseGraph* best = find_best_fit_ensemble(30, false, false);
+	ParseGraph* best = find_best_fit_ensemble(50, false, false);
 	double total_time = omp_get_wtime() - start_time;
 	//ParseGraph* best = find_best_fit(true, false);
 	printf("Fitness: %f\n", best->fitness);

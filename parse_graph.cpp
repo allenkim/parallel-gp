@@ -17,13 +17,13 @@ Node::Node(){
 
 Node::Node(bool active, bool terminal, int size): active(active), terminal(terminal){
 	if (this->terminal){
-		node_type = rand(0) % num_terminal_types;
+		node_type = xorand() % num_terminal_types;
 	}else {
-		node_type = rand(0) % num_nonterminal_types;
+		node_type = xorand() % num_nonterminal_types;
 		int num_children = num_arguments(static_cast<NonTerminal>(node_type));
 		children = std::vector<int>(num_children);
 		for (int i = 0; i < num_children; i++){
-			children[i]= rand(0) % size;
+			children[i]= xorand() % size;
 		}
 	}
 }
@@ -78,7 +78,7 @@ void ParseGraph::generate_graph(int size){
 	output = Node(true, false, size); //setup the first node
 	for (int i = 0; i < size-1; i++){ //generate children, for each row
 		for (int j = 0; j < size; j++){  //for each columm
-			if (rand(0) % 2){
+			if (xorand() % 2){
 				graph[i][j] = Node(false, true, size); //terminal node
 			}else{
 				graph[i][j] = Node(false, false, size); //non-terminal node

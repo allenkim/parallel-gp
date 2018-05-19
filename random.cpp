@@ -1,5 +1,6 @@
 #include <cstdlib>
 #include <ctime>
+#include "omp.h"
 #include "random.h"
 
 void init_rand_state(int num_threads, bool det, int seed){
@@ -25,10 +26,11 @@ unsigned int xorshift128(unsigned int* state, unsigned int size){
 	return t;
 }
 
-unsigned int rand(int id){
+unsigned int xorand(){
+	int id = omp_get_thread_num() % NUM_THREADS;
 	return xorshift128(state+id*4,4);
 }
 
-float randf(int id){
-	return (float)rand(id) / 4294967296;
+float xorandf(){
+	return (float)xorand() / 4294967296;
 }

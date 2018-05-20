@@ -37,7 +37,7 @@ enum NonTerminal{
 const unsigned int num_terminal_types = 2;
 const unsigned int num_nonterminal_types = 6;
 const unsigned int num_values = 2;
-
+int parity(int);
 unsigned int num_arguments(NonTerminal non_terminal_type);
 std::string type_to_string(bool terminal, int id);
 std::string value_to_string(Value);

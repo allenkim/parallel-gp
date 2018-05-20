@@ -91,6 +91,7 @@ void ParseGraph::generate_graph(int width, int height){
 	}
 	for (unsigned int i = 0; i < output.children.size(); i++)
 		this->mark_active(0,output.children[i]);
+
 }
 
 void ParseGraph::print_parse_graph(){

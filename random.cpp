@@ -15,7 +15,7 @@ void init_rand_state(int num_threads, bool det, int seed){
 }
 
 unsigned int xorshift128(unsigned int* state, unsigned int size){
-	/* Algorithm "xor128" from p. 5 of Marsaglia, "Xorshift RNGs" */
+	/* Algorithm "xor128" from 1p. 5 of Marsaglia, "Xorshif1t RNGs" */
 	unsigned int s, t = state[3];
 	t ^= t << 11;
 	t ^= t >> 8;

@@ -4,7 +4,7 @@
 #include <omp.h>
 #include "random.h"
 #include "parse_graph.h"
-#include "parity.h"
+#include "xor.h"
 #include "gp.h"
 unsigned int *state;
 int NUM_THREADS;
@@ -49,7 +49,6 @@ ParseGraph* find_best_fit_ensemble(int size, bool det, bool verbose = false){
 	return global_best;
 }
 
-/*
 int main(int argc, char* argv[]){
 	NUM_THREADS = 1;
 	if (argc >= 2)
@@ -63,7 +62,7 @@ int main(int argc, char* argv[]){
 	best->print_parse_graph();
 	printf("Time: %gs\n", total_time);
 	return 0;
-}*/
+}
 
 /*
 int main(){
@@ -81,6 +80,7 @@ int main(){
 }
 */
 
+/*
 int main(){
 	NUM_THREADS = 4;
 	init_rand_state(NUM_THREADS, false);
@@ -96,3 +96,4 @@ int main(){
 	delete test1;
 	return 0;
 }
+*/

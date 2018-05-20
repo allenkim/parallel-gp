@@ -176,6 +176,7 @@ float GP::eval_fitness(){
 	float total = 0.0;
 	#pragma omp parallel for
 	for (int i = 0; i < this->pop_size; i++){
+		this->population[i]->print_parse_graph();
 		if (this->population[i]->fitness < 0)
 			this->population[i]->fitness = fitness(this->population[i]);
 		if (this->population[i]->fitness > this->best_fitness){

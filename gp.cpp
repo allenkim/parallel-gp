@@ -12,7 +12,7 @@ GP::~GP(){
 	delete this->best;
 }
 
-float GP::initialize_pop(int grid_size, bool verbose){
+float GP::initialize_pop(int width, int height, bool verbose){
 	if (this->population.size() > 0){
 		for (int i = 0; i < this->pop_size; i++){
 			delete population[i];
@@ -21,7 +21,7 @@ float GP::initialize_pop(int grid_size, bool verbose){
 	}
 	for (int i = 0; i < this->pop_size; i++){
 		ParseGraph* g = new ParseGraph();
-		g->generate_graph(grid_size);
+		g->generate_graph(width, height);
 		this->population.push_back(g);
 	}
 	float fitness = this->eval_fitness();
@@ -39,8 +39,8 @@ void GP::crossover(ParseGraph* g1, ParseGraph* g2){
 	int cp1x = -1, cp1y = -1;
 	int cp2x = -1, cp2y = -1;
 	unsigned int sample_count = 2;
-	for (int i = 0; i < g1->size; i++){
-		for (int j = 0; j < g1->size; j++){
+	for (int i = 0; i < g1->height; i++){
+		for (int j = 0; j < g1->width; j++){
 			if (g1->graph[i][j].active){
 				if (xorand() % sample_count == sample_count - 1){
 					cp1x = i;
@@ -51,8 +51,8 @@ void GP::crossover(ParseGraph* g1, ParseGraph* g2){
 		}
 	}
 	sample_count = 2;
-	for (int i = 0; i < g1->size; i++){
-		for (int j = 0; j < g1->size; j++){
+	for (int i = 0; i < g1->height; i++){
+		for (int j = 0; j < g1->width; j++){
 			if (g2->graph[i][j].active){
 				if (xorand() % sample_count == sample_count - 1){
 					cp2x = i;
@@ -78,10 +78,10 @@ void GP::crossover(ParseGraph* g1, ParseGraph* g2){
 	else{
 		g2->graph[cp2x][cp2y] = g1->graph[cp1x][cp1y];
 	}
-	for (int i = cp2x+1; i < g2->size - 1; i++){
-		for (int j = 0; j < g2->size; j++){
+	for (int i = cp2x+1; i < g2->height - 1; i++){
+		for (int j = 0; j < g2->width; j++){
 			int g1idx = i-cp2x+cp1x;
-			if (g1idx < g1->size && g1->graph[g1idx][j].active)
+			if (g1idx < g1->height && g1->graph[g1idx][j].active)
 				g2->graph[i][j] = g1->graph[g1idx][j];
 		}
 	}
@@ -104,7 +104,7 @@ ParseGraph* GP::selection(int tournament_size){
 
 void GP::global_mutation(ParseGraph* g){
 	ParseGraph* tmp = new ParseGraph();
-	tmp->generate_graph(g->size);
+	tmp->generate_graph(g->width,g->height);
 	this->crossover(tmp, g);
 	delete tmp;
 }
@@ -112,8 +112,8 @@ void GP::global_mutation(ParseGraph* g){
 void GP::link_mutation(ParseGraph* g){
 	unsigned int sample_count = 1;
 	int cp1x = -1, cp1y = -1, child_idx = -1;
-	for (int i = 0; i < g->size; i++){
-		for (int j = 0; j < g->size; j++){
+	for (int i = 0; i < g->height; i++){
+		for (int j = 0; j < g->width; j++){
 			int num_child = g->graph[i][j].children.size();
 			if (g->graph[i][j].active && num_child > 0){
 				for (int k = 0; k < num_child; k++){
@@ -128,7 +128,7 @@ void GP::link_mutation(ParseGraph* g){
 	}
 	if (cp1x == -1)
 		return;
-	int new_child = xorand() % g->size;
+	int new_child = xorand() % g->width;
 	g->mark_inactive(cp1x+1, child_idx);
 	g->graph[cp1x][cp1y].children[child_idx] = new_child;
 	//printf("%d %d %d %d\n", cp1x, cp1y, child_idx, new_child);
@@ -138,8 +138,8 @@ void GP::link_mutation(ParseGraph* g){
 void GP::node_mutation(ParseGraph* g){
 	unsigned int sample_count = 2;
 	int cp1x = -1, cp1y = -1;
-	for (int i = 0; i < g->size; i++){
-		for (int j = 0; j < g->size; j++){
+	for (int i = 0; i < g->height; i++){
+		for (int j = 0; j < g->width; j++){
 			if (g->graph[i][j].active){
 				if (xorand() % sample_count == sample_count - 1){
 					cp1x = i;
@@ -149,8 +149,8 @@ void GP::node_mutation(ParseGraph* g){
 		}
 	}
 	if (cp1x == -1){
-		g->output = Node(false,false,g->size);
-		for (int i = 0; i < g->size; i++){
+		g->output = Node(false,false,g->width,g->height);
+		for (int i = 0; i < g->height; i++){
 			g->mark_inactive(0,i);
 		}
 		for (unsigned int i = 0; i < g->output.children.size(); i++){
@@ -159,13 +159,13 @@ void GP::node_mutation(ParseGraph* g){
 	}
 	else{
 		g->mark_inactive(cp1x, cp1y);
-		if (cp1x == g->size - 1)
-			g->graph[cp1x][cp1y] = Node(false, true, g->size);
+		if (cp1x == g->height - 1)
+			g->graph[cp1x][cp1y] = Node(false, true, g->width, g-> height);
 		else{
 			if (xorand() % 2){
-				g->graph[cp1x][cp1y] = Node(false, true, g->size); //terminal node
+				g->graph[cp1x][cp1y] = Node(false, true, g->width, g-> height); //terminal node
 			}else{
-				g->graph[cp1x][cp1y] = Node(false, false, g->size); //non-terminal node
+				g->graph[cp1x][cp1y] = Node(false, false, g->width, g-> height); //non-terminal node
 			}
 		}
 		g->mark_active(cp1x,cp1y);
@@ -196,7 +196,7 @@ float GP::eval_fitness(){
 float GP::next_gen(){
 	this->tmp_pop.clear();
 	this->tmp_pop.resize(this->pop_size);
-	#pragma omp parallel for 
+	#pragma omp parallel for
 	for (int i = 0; i < this->pop_size; i++){
 		ParseGraph *dad, *mom, *child;
 		dad = this->selection(this->tournament_size);
@@ -220,7 +220,7 @@ float GP::next_gen(){
 		}
 		this->tmp_pop[i] = child;
 	}
-	#pragma omp parallel for 
+	#pragma omp parallel for
 	for (int i = 0; i < this->pop_size; i++){
 		delete this->population[i];
 	}
@@ -239,4 +239,3 @@ float GP::run(bool verbose){
 	}
 	return score;
 }
-

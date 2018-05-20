@@ -5,7 +5,7 @@
 #include "random.h"
 #include "parse_graph.h"
 #include "gp.h"
-#include "xor.h" 
+#include "xor.h"
 unsigned int *state;
 int NUM_THREADS;
 
@@ -19,7 +19,7 @@ ParseGraph* find_best_fit(bool verbose, bool det, int seed = 1){
 	gp.global_mut_prob = GLOBAL_MUT_PROB;
 	gp.link_mut_prob = LINK_MUT_PROB;
 	gp.node_mut_prob = NODE_MUT_PROB;
-	gp.initialize_pop(GRID_SIZE, verbose);
+	gp.initialize_pop(WIDTH, HEIGHT, verbose);
 	gp.run(verbose);
 	if (verbose)
 		printf("Fitness: %f\n", gp.best_fitness);
@@ -96,4 +96,3 @@ int main(){
 	return 0;
 }
 */
-

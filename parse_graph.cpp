@@ -15,7 +15,7 @@ Node::Node(){
 
 }
 
-Node::Node(bool active, bool terminal, int size): active(active), terminal(terminal){
+Node::Node(bool active, bool terminal, int width, int height): active(active), terminal(terminal){
 	if (this->terminal){
 		node_type = xorand() % num_terminal_types;
 	}else {
@@ -23,7 +23,7 @@ Node::Node(bool active, bool terminal, int size): active(active), terminal(termi
 		int num_children = num_arguments(static_cast<NonTerminal>(node_type));
 		children = std::vector<int>(num_children);
 		for (int i = 0; i < num_children; i++){
-			children[i]= xorand() % size;
+			children[i]= xorand() % width;
 		}
 	}
 }
@@ -46,7 +46,7 @@ std::string Node::toString(){
 }
 
 void ParseGraph::mark_inactive(int i, int j){
-	if (i >= this->size || j >= this->size)
+	if (i >= this->height || j >= this->width)
 		return;
 	if (this->graph[i][j].active){
 		this->graph[i][j].active = false;
@@ -60,7 +60,7 @@ void ParseGraph::mark_inactive(int i, int j){
 
 
 void ParseGraph::mark_active(int i, int j){
-	if (i >= this->size || j >= this->size)
+	if (i >= this->height || j >= this->width)
 		return;
 	if (!this->graph[i][j].active){
 		this->graph[i][j].active = true;
@@ -72,21 +72,22 @@ void ParseGraph::mark_active(int i, int j){
 	}
 }
 
-void ParseGraph::generate_graph(int size){
-	this->size = size;
-	graph = std::vector<std::vector<Node>>(size,std::vector<Node>(size)); //allocate memory for the graph (has size * size Node objects)
-	output = Node(true, false, size); //setup the first node
-	for (int i = 0; i < size-1; i++){ //generate children, for each row
-		for (int j = 0; j < size; j++){  //for each columm
+void ParseGraph::generate_graph(int width, int height){
+	this->width = width;
+	this->height = height;
+	graph = std::vector<std::vector<Node>>(height,std::vector<Node>(width)); //allocate memory for the graph (has size * size Node objects)
+	output = Node(true, false, width, height); //setup the first node
+	for (int i = 0; i < height-1; i++){ //generate children, for each row
+		for (int j = 0; j < width; j++){  //for each columm
 			if (xorand() % 2){
-				graph[i][j] = Node(false, true, size); //terminal node
+				graph[i][j] = Node(false, true, width, height); //terminal node
 			}else{
-				graph[i][j] = Node(false, false, size); //non-terminal node
+				graph[i][j] = Node(false, false, width, height); //non-terminal node
 			}
 		}
 	}
-	for (int i = 0; i < size; i++){
-		graph[size-1][i] = Node(false,true, size);
+	for (int i = 0; i < width; i++){
+		graph[height-1][i] = Node(false,true, width, height);
 	}
 	for (unsigned int i = 0; i < output.children.size(); i++)
 		this->mark_active(0,output.children[i]);
@@ -94,8 +95,8 @@ void ParseGraph::generate_graph(int size){
 
 void ParseGraph::print_parse_graph(){
 	std::cout << output.toString() << std::endl;
-	for (int i = 0; i < size; i++){
-		for (int j = 0; j < size; j++){
+	for (int i = 0; i < height; i++){
+		for (int j = 0; j < width; j++){
 			std::cout << std::left << std::setw(45) << graph[i][j].toString();
 		}
 		std::cout << std::endl;
@@ -103,19 +104,19 @@ void ParseGraph::print_parse_graph(){
 }
 
 Value ParseGraph::eval(vector<Value> inputs) const{
-	vector<Value> values = vector<Value>(this->size);
+	vector<Value> values = vector<Value>(this->width);
 	//for the first row (of only terminals), determine the values of the terminals
-	for (int j = 0; j < size; j++){
-		if( graph[size-1][j].active){
-			values[j] = inputs[graph[size-1][j].node_type];
+	for (int j = 0; j < width; j++){
+		if( graph[height-1][j].active){
+			values[j] = inputs[graph[height-1][j].node_type];
 		}
 	}
 	//for the next row, determine the values of the active nodes, based on the previous nodes
 	//do this for all the following rows
 	vector<Value> next_row_values;
-	for (int i = size-2; i >= 0; i--){
-		next_row_values = vector<Value>(this->size);
-		for (int j = 0; j < size; j++){
+	for (int i = height-2; i >= 0; i--){
+		next_row_values = vector<Value>(this->width);
+		for (int j = 0; j < width; j++){
 			if (graph[i][j].active){
 				if (graph[i][j].terminal){
 					next_row_values[j] = inputs[graph[i][j].node_type];
@@ -142,7 +143,8 @@ ParseGraph* ParseGraph::copy(){
 	ParseGraph* copyg = new ParseGraph();
 	copyg->output = this->output;
 	copyg->graph = this->graph;
-	copyg->size = this->size;
+	copyg->width = this->width;
+	copyg->height = this->height;
 	copyg->fitness = this->fitness;
 	return copyg;
 }

@@ -23,9 +23,9 @@ class GP{
 		ParseGraph* best = NULL;
 
 		int curr_gen_num = 0;
-		
+
 		// Return average fitness of initial pop
-		float initialize_pop(int grid_size, bool verbose = false);
+		float initialize_pop(int width, int height, bool verbose = false);
 		ParseGraph* selection(int tournament_size);
 		void crossover(ParseGraph* g1, ParseGraph* g2);
 		void global_mutation(ParseGraph* g);
@@ -40,4 +40,3 @@ class GP{
 };
 
 #endif
-

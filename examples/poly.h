@@ -1,5 +1,5 @@
-#ifndef __XOR_H__
-#define __XOR_H__
+#ifndef __POLY_H__
+#define __POLY_H__
 #include <string>
 #include <vector>
 #include "parse_graph.h"
@@ -43,6 +43,5 @@ std::string value_to_string(Value);
 Value compute_nonterminal(NonTerminal,std::vector<Value>);
 float fitness(ParseGraph*  p);
 Value eval();
-
 
 #endif

@@ -1,4 +1,4 @@
-#include "xor.h"
+#include "poly.h"
 #include <omp.h>
 #include <string>
 #include <iostream>

@@ -1,12 +1,12 @@
 #ifndef __PARITY_H__
 #define __PARITY_H__
 #include <string>
-#include <vector>``
+#include <vector>
 #include "parse_graph.h"
 class ParseGraph;
 
-const int WIDTH = 4;
-const int HEIGHT = 4;
+const int WIDTH = 3;
+const int HEIGHT = 3;
 const int POP_SIZE = 200;
 const int NUM_GEN = 5;
 const int TOURN_SIZE = 7;

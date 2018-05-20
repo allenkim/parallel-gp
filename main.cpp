@@ -4,6 +4,7 @@
 #include <omp.h>
 #include "random.h"
 #include "parse_graph.h"
+#include "parity.h"
 #include "gp.h"
 unsigned int *state;
 int NUM_THREADS;
@@ -48,7 +49,7 @@ ParseGraph* find_best_fit_ensemble(int size, bool det, bool verbose = false){
 	return global_best;
 }
 
-
+/*
 int main(int argc, char* argv[]){
 	NUM_THREADS = 4;
 	if (argc >= 2)
@@ -62,7 +63,7 @@ int main(int argc, char* argv[]){
 	best->print_parse_graph();
 	printf("Time: %gs\n", total_time);
 	return 0;
-}
+}*/
 
 /*
 int main(){
@@ -80,18 +81,18 @@ int main(){
 }
 */
 
-/*int main(){
+int main(){
 	NUM_THREADS = 4;
 	init_rand_state(NUM_THREADS, false);
 	omp_set_num_threads(4);
 	ParseGraph* test1 = new ParseGraph();
 	double start_time = omp_get_wtime();
-	test1->generate_graph(2,3);
+	test1->generate_graph(3,3);
 	test1->print_parse_graph();
-	std::cout << value_to_string(test1->eval({FALSE,FALSE})) << std::endl;
+	std::cout << value_to_string(test1->eval({FALSE,FALSE,FALSE})) << std::endl;
 	std::cout << "FITNESS: " << fitness(test1) << std::endl;
 	double time = omp_get_wtime() - start_time;
 	std::cout << "\t Time(ms): " << time*1000 << std::endl;
 	delete test1;
 	return 0;
-}*/
+}

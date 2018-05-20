@@ -107,15 +107,18 @@ void ParseGraph::print_parse_graph(){
 Value ParseGraph::eval(vector<Value> inputs) const{
 	vector<Value> values = vector<Value>(this->width);
 	//for the first row (of only terminals), determine the values of the terminals
+	//std::cout << "Running eval" << std::endl;
 	for (int j = 0; j < width; j++){
 		if( graph[height-1][j].active){
 			values[j] = inputs[graph[height-1][j].node_type];
+			//std::cout << "j: " << j << " values[j]: " << value_to_string(values[j]) << std::endl;
 		}
 	}
 	//for the next row, determine the values of the active nodes, based on the previous nodes
 	//do this for all the following rows
 	vector<Value> next_row_values;
 	for (int i = height-2; i >= 0; i--){
+		//std::cout << "i: " << i << std::endl;
 		next_row_values = vector<Value>(this->width);
 		for (int j = 0; j < width; j++){
 			if (graph[i][j].active){
@@ -128,6 +131,7 @@ Value ParseGraph::eval(vector<Value> inputs) const{
 					}
 					next_row_values[j] = compute_nonterminal((NonTerminal)graph[i][j].node_type, input_to_this_function);
 				}
+				//std::cout << "j: " << j << " next_row_values[j]: " << value_to_string(next_row_values[j]) << std::endl;
 			}
 		}
 		values = next_row_values;

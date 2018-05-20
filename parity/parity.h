@@ -5,11 +5,19 @@
 #include "parse_graph.h"
 class ParseGraph;
 
+<<<<<<< HEAD
 const int WIDTH = 8;
 const int HEIGHT = 8;
 const int POP_SIZE = 800;
 const int NUM_GEN = 50;
 const int TOURN_SIZE = 30;
+=======
+const int WIDTH = 3;
+const int HEIGHT = 3;
+const int POP_SIZE = 200;
+const int NUM_GEN = 5;
+const int TOURN_SIZE = 7;
+>>>>>>> 46f70e0bc79e8247afd4100b73994298a2d00bd6
 const float CROSSOVER_PROB = 0.7;
 const float GLOBAL_MUT_PROB = 0.3;
 const float LINK_MUT_PROB = 0.3;

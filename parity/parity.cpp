@@ -96,13 +96,21 @@ Value compute_nonterminal(NonTerminal non_terminal_type,std::vector<Value> input
 	return FALSE;
 }
 
+<<<<<<< HEAD
 int parity(int x){
+=======
+unsigned int parity(unsigned int x){
+>>>>>>> 46f70e0bc79e8247afd4100b73994298a2d00bd6
 	x ^= x >> 16;
 	x ^= x >> 8;
 	x ^= x >> 4;
 	x ^= x >> 2;
 	x ^= x >> 1;
+<<<<<<< HEAD
 	return (~x) & 1;
+=======
+	return 1 - ((~x) & 1);
+>>>>>>> 46f70e0bc79e8247afd4100b73994298a2d00bd6
 }
 
 
@@ -114,12 +122,21 @@ float fitness(ParseGraph* p){
 		//std::cout << "parity[i]: " << parity(i) << std::endl;
 		for (unsigned int j = 0; j < num_terminal_types; j++){
 			if (((1 << j) & i) > 0){
-				A[i][j] = TRUE;
+				A[i][num_terminal_types-1-j] = TRUE;
 			}else{
-				A[i][j] = FALSE;
+				A[i][num_terminal_types-1-j] = FALSE;
 			}
 		}
+<<<<<<< HEAD
 		if (p->eval(A[i]) == ( (parity(i) == 0) ?  TRUE:FALSE)) {
+=======
+		//for (unsigned int j = 0; j < num_terminal_types; j++){
+		//	std::cout << value_to_string(A[i][j]) << " ";
+		//}
+		//std::cout << std::endl;
+	  //	std::cout << "\t\tp->eval(A[i]) " << value_to_string(p->eval(A[i])) << std::endl;
+		if (p->eval(A[i]) == ( (parity(i) == 1) ?  TRUE:FALSE)) {
+>>>>>>> 46f70e0bc79e8247afd4100b73994298a2d00bd6
 			 //std::cout << "MATCH" <<  std::endl;
 			hamming_distance++;
 		}

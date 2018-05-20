@@ -5,9 +5,9 @@
 #include "parse_graph.h"
 class ParseGraph;
 
-const int GRID_SIZE = 3;
-const int POP_SIZE = 200;
-const int NUM_GEN = 5;
+const int GRID_SIZE = 6;
+const int POP_SIZE = 1000;
+const int NUM_GEN = 100;
 const int TOURN_SIZE = 7;
 const float CROSSOVER_PROB = 0.7;
 const float GLOBAL_MUT_PROB = 0.25;

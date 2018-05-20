@@ -127,7 +127,7 @@ float fitness(ParseGraph* p){
 				}
 			}
 		}
-	return hamming_distance;
+	return 4-hamming_distance;
 }
 
 Value eval(){

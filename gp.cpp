@@ -73,6 +73,8 @@ void GP::crossover(ParseGraph* g1, ParseGraph* g2){
 		}
 	}
 	else if (cp2x == -1){
+		if (g1->graph[cp1x][cp1y].terminal)
+			return;
 		g2->output = g1->graph[cp1x][cp1y];
 	}
 	else{
@@ -176,7 +178,6 @@ float GP::eval_fitness(){
 	float total = 0.0;
 	#pragma omp parallel for
 	for (int i = 0; i < this->pop_size; i++){
-		this->population[i]->print_parse_graph();
 		if (this->population[i]->fitness < 0)
 			this->population[i]->fitness = fitness(this->population[i]);
 		if (this->population[i]->fitness > this->best_fitness){

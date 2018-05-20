@@ -8,12 +8,12 @@ class ParseGraph;
 const int WIDTH = 3;
 const int HEIGHT = 3;
 const int POP_SIZE = 200;
-const int NUM_GEN = 5;
+const int NUM_GEN = 20;
 const int TOURN_SIZE = 7;
-const float CROSSOVER_PROB = 1.0;
-const float GLOBAL_MUT_PROB = 0.0;
-const float LINK_MUT_PROB = 0.0;
-const float NODE_MUT_PROB = 0.0;
+const float CROSSOVER_PROB = 0.7;
+const float GLOBAL_MUT_PROB = 0.2;
+const float LINK_MUT_PROB = 0.2;
+const float NODE_MUT_PROB = 0.2;
 
 enum Terminal{
 	X1,

@@ -4,7 +4,6 @@
 #include <omp.h>
 #include "random.h"
 #include "parse_graph.h"
-#include "xor.h"
 #include "gp.h"
 unsigned int *state;
 int NUM_THREADS;
@@ -55,8 +54,8 @@ int main(int argc, char* argv[]){
 		NUM_THREADS = atoi(argv[1]);
 	omp_set_num_threads(NUM_THREADS);
 	double start_time = omp_get_wtime();
-	//ParseGraph* best = find_best_fit_ensemble(100, false, false);
-	ParseGraph* best = find_best_fit(true, false);
+	ParseGraph* best = find_best_fit_ensemble(4, false, false);
+	//ParseGraph* best = find_best_fit(true, false);
 	double total_time = omp_get_wtime() - start_time;
 	printf("Fitness: %f\n", best->fitness);
 	best->print_parse_graph();

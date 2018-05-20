@@ -170,7 +170,6 @@ void GP::node_mutation(ParseGraph* g){
 		}
 		g->mark_active(cp1x,cp1y);
 	}
-
 }
 
 float GP::eval_fitness(){
@@ -179,16 +178,17 @@ float GP::eval_fitness(){
 	for (int i = 0; i < this->pop_size; i++){
 		if (this->population[i]->fitness < 0)
 			this->population[i]->fitness = fitness(this->population[i]);
-		#pragma omp critical
-		{
-			if (this->population[i]->fitness > this->best_fitness){
+		if (this->population[i]->fitness > this->best_fitness){
+			#pragma omp critical
+			{
 				this->best_fitness = this->population[i]->fitness;
 				if (this->best)
 					delete this->best;
 				this->best = this->population[i]->copy();
 			}
-			total += this->population[i]->fitness;
 		}
+		#pragma omp atomic
+		total += this->population[i]->fitness;
 	}
 	return total / this->pop_size;
 }
@@ -202,6 +202,7 @@ float GP::next_gen(){
 		dad = this->selection(this->tournament_size);
 		mom = this->selection(this->tournament_size);
 		child = mom->copy();
+		child->fitness = -1.0;
 		if (xorandf() <= this->crossover_prob){
 			this->crossover(dad,child);
 			//printf("Crossover\n");

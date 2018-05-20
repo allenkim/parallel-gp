@@ -1,8 +1,8 @@
 #ifndef __PARSE_GRAPH_H__
 #define __PARSE_GRAPH_H__
 #include <vector>
-#include "parity.h"
 #include <string>
+#include "xor.h"
 enum Value : int;
 using std::vector;
 

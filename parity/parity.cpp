@@ -96,10 +96,22 @@ Value compute_nonterminal(NonTerminal non_terminal_type,std::vector<Value> input
 	return FALSE;
 }
 
+int parity(int x){
+	x ^= x >> 16;
+	x ^= x >> 8;
+	x ^= x >> 4;
+	x ^= x >> 2;
+	x ^= x >> 1;
+	return (~x) & 1;
+}
+
+
 float fitness(ParseGraph* p){
 	int hamming_distance = 0;
 	vector<vector<Value>> A(pow(2,num_terminal_types),vector<Value>(num_terminal_types));
-	for (unsigned int i = 0; i < pow(2,num_terminal_types)-1; i++){
+	for (unsigned int i = 0; i < pow(2,num_terminal_types); i++){
+		//std::cout << "i: " << i << std::endl;
+		//std::cout << "parity[i]: " << parity(i) << std::endl;
 		for (unsigned int j = 0; j < num_terminal_types; j++){
 			if (((1 << j) & i) > 0){
 				A[i][j] = TRUE;
@@ -107,11 +119,12 @@ float fitness(ParseGraph* p){
 				A[i][j] = FALSE;
 			}
 		}
-		if (p->eval(A[i]) == TRUE){
+		if (p->eval(A[i]) == ( (parity(i) == 0) ?  TRUE:FALSE)) {
+			 //std::cout << "MATCH" <<  std::endl;
 			hamming_distance++;
 		}
 	}
-	return 4 - hamming_distance;
+	return pow(2,num_terminal_types) - hamming_distance;
 }
 
 Value eval(){

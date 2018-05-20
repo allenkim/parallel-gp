@@ -50,14 +50,14 @@ ParseGraph* find_best_fit_ensemble(int size, bool det, bool verbose = false){
 
 
 int main(int argc, char* argv[]){
-	NUM_THREADS = 4;
+	NUM_THREADS = 1;
 	if (argc >= 2)
 		NUM_THREADS = atoi(argv[1]);
 	omp_set_num_threads(NUM_THREADS);
 	double start_time = omp_get_wtime();
-	ParseGraph* best = find_best_fit_ensemble(50, false, false);
+	//ParseGraph* best = find_best_fit_ensemble(100, false, false);
+	ParseGraph* best = find_best_fit(true, false);
 	double total_time = omp_get_wtime() - start_time;
-	//ParseGraph* best = find_best_fit(true, false);
 	printf("Fitness: %f\n", best->fitness);
 	best->print_parse_graph();
 	printf("Time: %gs\n", total_time);

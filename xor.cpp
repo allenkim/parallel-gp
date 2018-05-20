@@ -1,7 +1,7 @@
-#include "parity.h"
+#include "xor.h"
 #include <omp.h>
-#include <string>
 #include <cmath>
+#include <string>
 #include <iostream>
 
 unsigned int num_arguments(NonTerminal non_terminal_type){
@@ -20,8 +20,6 @@ std::string type_to_string(bool terminal, int id){
 				return "X1   ";
 			case 1:
 				return "X2   ";
-      case 2:
-        return "X3   ";
 			default:
 					std::cout << id << std::endl;
 					std::cout << "ERROR in function type_to_string. Invalid ID." << std::endl;
@@ -104,7 +102,6 @@ int parity(int x){
 	x ^= x >> 1;
 	return (~x) & 1;
 }
-
 
 float fitness(ParseGraph* p){
 	int hamming_distance = 0;

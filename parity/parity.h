@@ -1,19 +1,19 @@
 #ifndef __PARITY_H__
 #define __PARITY_H__
 #include <string>
-#include <vector>``
+#include <vector>
 #include "parse_graph.h"
 class ParseGraph;
 
-const int WIDTH = 4;
-const int HEIGHT = 4;
-const int POP_SIZE = 200;
-const int NUM_GEN = 5;
-const int TOURN_SIZE = 7;
+const int WIDTH = 8;
+const int HEIGHT = 8;
+const int POP_SIZE = 800;
+const int NUM_GEN = 50;
+const int TOURN_SIZE = 30;
 const float CROSSOVER_PROB = 0.7;
-const float GLOBAL_MUT_PROB = 0.25;
-const float LINK_MUT_PROB = 0.25;
-const float NODE_MUT_PROB = 0.05;
+const float GLOBAL_MUT_PROB = 0.3;
+const float LINK_MUT_PROB = 0.3;
+const float NODE_MUT_PROB = 0.3;
 
 enum Terminal{
 	X1,

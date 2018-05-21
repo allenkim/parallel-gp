@@ -1,0 +1,72 @@
+Num Threads: 1
+Fitness: 4.000000
+Time: 0.0564597s
+Num Threads: 2
+Fitness: 4.000000
+Time: 0.0393319s
+Num Threads: 3
+Fitness: 4.000000
+Time: 0.041801s
+Num Threads: 4
+Fitness: 4.000000
+Time: 0.0268582s
+Num Threads: 5
+Fitness: 4.000000
+Time: 0.0294976s
+Num Threads: 6
+Fitness: 4.000000
+Time: 0.0288128s
+Num Threads: 7
+Fitness: 4.000000
+Time: 0.0253935s
+Num Threads: 8
+Fitness: 4.000000
+Time: 0.0283094s
+Num Threads: 9
+Fitness: 4.000000
+Time: 0.0270032s
+Num Threads: 10
+Fitness: 4.000000
+Time: 0.0274863s
+Num Threads: 11
+Fitness: 4.000000
+Time: 0.027887s
+Num Threads: 12
+Fitness: 4.000000
+Time: 0.0315548s
+Num Threads: 13
+Fitness: 4.000000
+Time: 0.0247301s
+Num Threads: 14
+Fitness: 4.000000
+Time: 0.0270079s
+Num Threads: 15
+Fitness: 4.000000
+Time: 0.0291921s
+Num Threads: 16
+Fitness: 4.000000
+Time: 0.0290123s
+Num Threads: 17
+Fitness: 4.000000
+Time: 0.0289812s
+Num Threads: 18
+Fitness: 4.000000
+Time: 0.0298882s
+Num Threads: 19
+Fitness: 4.000000
+Time: 0.0274799s
+Num Threads: 20
+Fitness: 4.000000
+Time: 0.026093s
+Num Threads: 21
+Fitness: 4.000000
+Time: 0.0291738s
+Num Threads: 22
+Fitness: 4.000000
+Time: 0.0283058s
+Num Threads: 23
+Fitness: 4.000000
+Time: 0.0291264s
+Num Threads: 24
+Fitness: 4.000000
+Time: 0.0298634s

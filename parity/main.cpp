@@ -57,8 +57,9 @@ int main(int argc, char* argv[]){
 	ParseGraph* best = find_best_fit_ensemble(4, false, false);
 	//ParseGraph* best = find_best_fit(true, false);
 	double total_time = omp_get_wtime() - start_time;
+	printf("Num Threads: %d\n", NUM_THREADS);
 	printf("Fitness: %f\n", best->fitness);
-	best->print_parse_graph();
+	//best->print_parse_graph();
 	printf("Time: %gs\n", total_time);
 	return 0;
 }

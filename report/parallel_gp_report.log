@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Arch Linux) (preloaded format=pdflatex 2018.3.29)  21 MAY 2018 00:29
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Arch Linux) (preloaded format=pdflatex 2018.3.29)  21 MAY 2018 17:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -25,18 +25,13 @@ File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 -- Using 8.5in x 11in (letter) paper.
 -- Using PDF output.
 \@IEEEnormalsizeunitybaselineskip=\dimen105
--- This is a 10 point document.
+-- This is a 12 point document.
 \CLASSINFOnormalsizebaselineskip=\dimen106
 \CLASSINFOnormalsizeunitybaselineskip=\dimen107
 \IEEEnormaljot=\dimen108
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <5> not available
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <5> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
-
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <7> not available
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <6> not available
 (Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
 
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
@@ -54,24 +49,24 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <10> not available
 (Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
 
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <11> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <11> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
-
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <12> not available
 (Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
 
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <17> not available
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <17> not available
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <14> not available
 (Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
 
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <20> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <20> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
+
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <22> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <22> not available
 (Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
 
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <24> not available
@@ -344,7 +339,7 @@ File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    ... okay on input line 12.
 
--- Lines per column: 56 (exact).
+-- Lines per column: 48 (exact).
 (/usr/share/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count110
@@ -423,7 +418,27 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 49.
 
 (/usr/share/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
+) [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
+
+
+]
+Missing character: There is no ‚ in font ptmr7t!
+Missing character: There is no Ä in font ptmr7t!
+Missing character: There is no ô in font ptmr7t!
+Missing character: There is no ‚ in font ptmr7t!
+Missing character: There is no Ä in font ptmr7t!
+Missing character: There is no ô in font ptmr7t!
+<xor_scalability.png, id=13, 455.45157pt x 255.95625pt>
+File: xor_scalability.png Graphic file (type png)
+<use xor_scalability.png>
+Package pdftex.def Info: xor_scalability.png  used on input line 93.
+(pdftex.def)             Requested size: 455.45045pt x 255.95561pt.
+ [2]
+<parity_scalability.png, id=18, 455.45157pt x 255.95625pt>
+File: parity_scalability.png Graphic file (type png)
+<use parity_scalability.png>
+Package pdftex.def Info: parity_scalability.png  used on input line 102.
+(pdftex.def)             Requested size: 455.45045pt x 255.95561pt.
 Missing character: There is no ‚ in font ptmr7t!
 Missing character: There is no Ä in font ptmr7t!
 Missing character: There is no ú in font ptmr7t!
@@ -431,18 +446,13 @@ Missing character: There is no ‚ in font ptmr7t!
 Missing character: There is no Ä in font ptmr7t!
 Missing character: There is no ù in font ptmr7t!
 
-Underfull \hbox (badness 10000) in paragraph at lines 77--78
-[]\OT1/ptm/m/n/8 B. Ed-monds, Meta-genetic pro-gram-ming: Co-evolving the
+Underfull \hbox (badness 1371) in paragraph at lines 127--128
+[]\OT1/ptm/m/n/9 B. Ed-monds, Meta-genetic pro-gram-ming: Co-evolving the
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 77--78
-\OT1/ptm/m/n/8 op-er-a-tors of vari-a-tion, CPM Re-port No.: 98-32. Cen-tre
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 77--78
-\OT1/ptm/m/n/8 for Pol-icy Mod-elling, Manch-ester Metropoli-tan Uni-ver-sity.
+Underfull \hbox (badness 2452) in paragraph at lines 127--128
+\OT1/ptm/m/n/9 op-er-a-tors of vari-a-tion, CPM Re-port No.: 98-32. Cen-tre
  []
 
 
@@ -456,30 +466,28 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
-
-
-]
-(./parallel_gp_report.aux) ) 
+[3 <./xor_scalability.png (PNG copy)>] [4 <./parity_scalability.png (PNG copy)>
+] (./parallel_gp_report.aux) ) 
 Here is how much of TeX's memory you used:
- 4315 strings out of 492982
- 62087 string characters out of 6138579
- 129352 words of memory out of 5000000
- 7827 multiletter control sequences out of 15000+600000
- 34706 words of font info for 70 fonts, out of 8000000 for 9000
+ 4341 strings out of 492982
+ 62475 string characters out of 6138579
+ 129381 words of memory out of 5000000
+ 7842 multiletter control sequences out of 15000+600000
+ 36623 words of font info for 77 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,8n,35p,797b,242s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texmf-dist/fonts/enc/dvips/base/8r.enc}
-</usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmr7.pfb></usr/share/texmf-dist/fonts/type1/urw/times/
-utmb8a.pfb></usr/share/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share
-/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texmf-dist/fonts/type1
-/urw/times/utmri8a.pfb>
-Output written on parallel_gp_report.pdf (1 page, 76118 bytes).
+{/usr/share/texmf-dist/fonts/enc/dvips/base/8r.en
+c}</usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-dist/font
+s/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmsy8.pfb></usr/share/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></
+usr/share/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texmf-dist/f
+onts/type1/urw/times/utmr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/times/ut
+mri8a.pfb>
+Output written on parallel_gp_report.pdf (4 pages, 124287 bytes).
 PDF statistics:
- 37 PDF objects out of 1000 (max. 8388607)
- 26 compressed objects within 1 object stream
+ 52 PDF objects out of 1000 (max. 8388607)
+ 35 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 11 words of extra memory for PDF output out of 10000 (max. 10000000)
 

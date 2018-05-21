@@ -115,7 +115,7 @@ float fitness(ParseGraph* p, bool print){
 		for (unsigned int i = 0; i < num_terminal_types; i++){
 			std::cout << std::setw(9) << type_to_string(true,i);
 		}
-		std::cout << std::setw(9)<< "Output:" << "Expected output (parity checker):" << std::endl;
+		std::cout << std::setw(9)<< "Output:" << "Expected output (XOR):" << std::endl;
 	}
 	for (unsigned int i = 0; i < pow(2,num_terminal_types); i++){
 		//std::cout << "i: " << i << std::endl;

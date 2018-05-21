@@ -3,6 +3,7 @@
 #include <cmath>
 #include <string>
 #include <iostream>
+#include <iomanip>
 
 unsigned int num_arguments(NonTerminal non_terminal_type){
 	if (non_terminal_type != NonTerminal::NOT){
@@ -94,19 +95,28 @@ Value compute_nonterminal(NonTerminal non_terminal_type,std::vector<Value> input
 	return FALSE;
 }
 
+//even number of 0s returns a 1
 unsigned int parity(unsigned int x){
 	x ^= x >> 16;
 	x ^= x >> 8;
 	x ^= x >> 4;
 	x ^= x >> 2;
 	x ^= x >> 1;
-	return 1 - ((~x) & 1);
+	return ((~x) & 1);
 }
 
 
-float fitness(ParseGraph* p){
+float fitness(ParseGraph* p, bool print){
 	int hamming_distance = 0;
 	vector<vector<Value>> A(pow(2,num_terminal_types),vector<Value>(num_terminal_types));
+	if (print){
+		std::cout << "======================" << std::endl;
+		std::cout << "Printing truth table for the parse graph: " << std::endl;
+		for (unsigned int i = 0; i < num_terminal_types; i++){
+			std::cout << std::setw(9) << type_to_string(true,i);
+		}
+		std::cout << std::setw(9)<< "Output:" << "Expected output (parity checker):" << std::endl;
+	}
 	for (unsigned int i = 0; i < pow(2,num_terminal_types); i++){
 		//std::cout << "i: " << i << std::endl;
 		//std::cout << "parity[i]: " << parity(i) << std::endl;
@@ -117,15 +127,23 @@ float fitness(ParseGraph* p){
 				A[i][num_terminal_types-1-j] = FALSE;
 			}
 		}
+		if (print){
+			for (unsigned int j = 0; j < num_terminal_types; j++){
+					std::cout << std::setw(9) << value_to_string(A[i][j]);
+			}
+		}
 		//for (unsigned int j = 0; j < num_terminal_types; j++){
 		//	std::cout << value_to_string(A[i][j]) << " ";
 		//}
 		//std::cout << std::endl;
 	  //	std::cout << "\t\tp->eval(A[i]) " << value_to_string(p->eval(A[i])) << std::endl;
-		if (p->eval(A[i]) == ( (parity(i) == 1) ?  TRUE:FALSE)) {
+		Value v,y;
+		if ((v = p->eval(A[i])) != (y = ((parity(i) == 0) ?  TRUE:FALSE))) {
 			 //std::cout << "MATCH" <<  std::endl;
 			hamming_distance++;
 		}
+		if (print)
+			std::cout << std::setw(9) << value_to_string(v) <<  value_to_string(y) << std::endl;
 	}
 	return pow(2,num_terminal_types) - hamming_distance;
 }

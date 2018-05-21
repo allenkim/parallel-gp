@@ -61,6 +61,8 @@ int main(int argc, char* argv[]){
 	printf("Fitness: %f\n", best->fitness);
 	best->print_parse_graph();
 	printf("Time: %gs\n", total_time);
+	fitness(best,true);
+
 	return 0;
 }
 

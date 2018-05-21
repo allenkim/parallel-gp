@@ -3,7 +3,7 @@
 #include "gp.h"
 #include "random.h"
 
-extern float fitness(ParseGraph*);
+extern float fitness(ParseGraph*, bool);
 
 GP::~GP(){
 	for (unsigned int i = 0; i < this->population.size(); i++){

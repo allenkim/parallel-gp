@@ -11,9 +11,9 @@ const int POP_SIZE = 2000;
 const int NUM_GEN = 50;
 const int TOURN_SIZE = 30;
 const float CROSSOVER_PROB = 0.7;
-const float GLOBAL_MUT_PROB = 0.01;
-const float LINK_MUT_PROB = 0.01;
-const float NODE_MUT_PROB = 0.01;
+const float GLOBAL_MUT_PROB = 0.05;
+const float LINK_MUT_PROB = 0.05;
+const float NODE_MUT_PROB = 0.05;
 
 enum Terminal{
 	X1,

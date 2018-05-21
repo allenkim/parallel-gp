@@ -18,7 +18,7 @@ const float NODE_MUT_PROB = 0.05;
 enum Terminal{
 	X1,
 	X2,
-  	X3
+  X3
 };
 
 enum Value: int {
@@ -43,7 +43,7 @@ unsigned int num_arguments(NonTerminal non_terminal_type);
 std::string type_to_string(bool terminal, int id);
 std::string value_to_string(Value);
 Value compute_nonterminal(NonTerminal,std::vector<Value>);
-float fitness(ParseGraph*  p);
+float fitness(ParseGraph*  p, bool print = false);
 Value eval();
 
 

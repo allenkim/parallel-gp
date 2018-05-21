@@ -59,28 +59,28 @@ int main(int argc, char* argv[]){
 	double total_time = omp_get_wtime() - start_time;
 	printf("Num Threads: %d\n", NUM_THREADS);
 	printf("Fitness: %f\n", best->fitness);
-	//best->print_parse_graph();
+	best->print_parse_graph();
 	printf("Time: %gs\n", total_time);
 	return 0;
 }
 
 /*
 int main(){
+	NUM_THREADS = 4;
+	omp_set_num_threads(NUM_THREADS);
 	init_rand_state(1, false, 1);
 	ParseGraph* test1 = new ParseGraph();
 	ParseGraph* test2 = new ParseGraph();
-	test1->generate_graph(3);
-	test2->generate_graph(3);
-	GP gp(2,5);
+	test1->generate_graph(3,3);
+	test2->generate_graph(3,3);
+	GP gp(4,2,5);
 	test1->print_parse_graph();
 	test2->print_parse_graph();
 	gp.crossover(test1,test2);
 	test2->print_parse_graph();
 	return 0;
 }
-*/
 
-/*
 int main(){
 	NUM_THREADS = 4;
 	init_rand_state(NUM_THREADS, false);

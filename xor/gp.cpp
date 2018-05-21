@@ -63,6 +63,8 @@ void GP::crossover(ParseGraph* g1, ParseGraph* g2){
 		}
 	}
 	//printf("%d %d, %d %d\n", cp1x, cp1y, cp2x, cp2y);
+	if (cp2x == g2->height - 1)
+		return;
 	if (cp1x == -1){
 		if (cp2x == -1){
 			g2->output = g1->output;

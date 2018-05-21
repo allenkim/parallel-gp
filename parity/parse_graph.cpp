@@ -110,6 +110,10 @@ Value ParseGraph::eval(vector<Value> inputs) const{
 	//std::cout << "Running eval" << std::endl;
 	for (int j = 0; j < width; j++){
 		if( graph[height-1][j].active){
+			if (!graph[height-1][j].terminal){
+				std::cout << "ERROR. THE BOTTOM ROW CONTAINS NON-TERMINALS! HOW DO YOU EXPECT ME TO EVAL THIS?" << std::endl;
+				exit(1);
+			}
 			values[j] = inputs[graph[height-1][j].node_type];
 			//std::cout << "j: " << j << " values[j]: " << value_to_string(values[j]) << std::endl;
 		}
@@ -143,6 +147,7 @@ Value ParseGraph::eval(vector<Value> inputs) const{
 	}
 	return compute_nonterminal((NonTerminal)output.node_type, input_to_this_function);
 }
+
 
 ParseGraph* ParseGraph::copy(){
 	ParseGraph* copyg = new ParseGraph();
